@@ -1,46 +1,29 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class KNearestPoints {
 
     @Test
     public void test() {
-//        ArrayList<Integer> al = new ArrayList<>();
-        System.out.println(Math.pow(4, 2));
-        System.out.println(Math.sqrt(4));
+        int[] dd = new int[2];
+        int[][] a = {{3, 3}, {5, -1}, {2, 4}, {2, 2}};
 
-        int[][] a = new int[6][2];
+        int[][] KPoints = KNearestPoints.kClosest(a, 3);
 
-
+        for (int[] point : KPoints) {
+            System.out.println(point[0] + ", " + point[1]);
+        }
     }
 
-    public int[][] kClosest(int[][] points, int K) {
-        double[][] distance = new double[K][2];
-        Arrays.fill(distance, Integer.MAX_VALUE);
-//        double[] sort = new double[6];
-        double[][] KPoints = new double[K][2];
-        for (int i = 0; i < points.length; ++i) {
-            double ans = Math.sqrt(Math.pow(points[i][0], 2) + Math.pow(points[i][1], 2));
-            double temp1 = 0;
-            double temp2 = i;
-            int index = 0;
-            while (index < K && distance[index][0] > temp) {
-                index++;
+    public static int[][] kClosest(int[][] points, int K) {
+        Arrays.sort(points, new Comparator<int[]>() {
+            public int compare(int[] point1, int[] point2) {
+                return (point1[0] * point1[0] + point1[1] * point1[1]) - (point2[0] * point2[0] + point2[1] * point2[1]);
             }
-
-            while(index < K) {
-                temp1 = distance[index][0];
-                temp2 = distance[index][1];
-                distance
-            }
-        }
-
-        Arrays.sort(sort);
-        for (int i = 0; i < K; ++i) {
-
-        }
-        return null;
+        });
+        return Arrays.copyOfRange(points, 0, K);
     }
+
 }
