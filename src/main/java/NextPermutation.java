@@ -7,7 +7,7 @@ public class NextPermutation {
     @Test
     public void test() {
         NextPermutation nextPermutation = new NextPermutation();
-        int[] nums = {8, 9, 8};
+        int[] nums = {2, 3, 1, 3, 3};
         nextPermutation.nextPermutation(nums);
         for (int i : nums) {
             System.out.println(i);
@@ -22,18 +22,24 @@ public class NextPermutation {
                 int currentValue = nums[i - 1];
                 int largerButMin = i;
 
-                // 获取大于currentValue但最小的值
-                for (int j = i + 1; j < nums.length; ++j) {
+                // 从后往回扫，获取大于currentValue但最小的值
+                for (int j = nums.length - 1; j > i; --j) {
                     if (nums[j] > currentValue) {
-                        largerButMin = nums[j] < nums[largerButMin] ? j : largerButMin;
+                        largerButMin = j;
+                        break;
                     }
                 }
 
                 // 交换当前i值和大于但最小值
                 swap(nums, i - 1, largerButMin);
 
-                // 升序剩余值
-                Arrays.sort(nums, i, nums.length);
+                // 升序剩余值，revers即可
+                int left = i, right = nums.length - 1;
+                while (left < right) {
+                    swap(nums, left, right);
+                    ++left;
+                    --right;
+                }
                 flag = 1;
                 break;
             }
