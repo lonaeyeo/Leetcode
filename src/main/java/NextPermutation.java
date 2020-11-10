@@ -1,6 +1,7 @@
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class NextPermutation {
 
@@ -56,5 +57,15 @@ public class NextPermutation {
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
+    }
+
+    public int findRepeatNumber(int[] nums) {
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (int num : nums) {
+            if (!hashSet.add(num)) {
+                return num;
+            }
+        }
+        return 0;
     }
 }
