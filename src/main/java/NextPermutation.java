@@ -60,7 +60,7 @@ public class NextPermutation {
     }
 
     public int findRepeatNumber(int[] nums) {
-        HashSet<Integer> hashSet = new HashSet<>();
+        HashSet<Integer> hashSet = new HashSet<Integer>();
         for (int num : nums) {
             if (!hashSet.add(num)) {
                 return num;
