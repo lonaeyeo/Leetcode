@@ -1,3 +1,4 @@
+import Tree.Tree_Node;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,11 +20,11 @@ public class Main {
 
     @Test
     public void testn() {
-        TreeNode a = new TreeNode(10);
-        TreeNode b = new TreeNode(5);
-        TreeNode c = new TreeNode(15);
-        TreeNode d = new TreeNode(6);
-        TreeNode e = new TreeNode(20);
+        Tree_Node a = new Tree_Node(10);
+        Tree_Node b = new Tree_Node(5);
+        Tree_Node c = new Tree_Node(15);
+        Tree_Node d = new Tree_Node(6);
+        Tree_Node e = new Tree_Node(20);
         a.left = b;
         a.right = c;
         c.left = d;
