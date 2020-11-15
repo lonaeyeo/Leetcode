@@ -15,9 +15,9 @@ public class DeleteKDigits {
 //        System.out.println((char) b);
 //        String s1 = "";
 //        System.out.println(s1.length());
-        String str = "123450";
+        String str = "1432219";
         DeleteKDigits deleteKDigits = new DeleteKDigits();
-        System.out.println(deleteKDigits.removeKdigits(str, 6));
+        System.out.println(deleteKDigits.removeKdigits(str, 3));
     }
 
     public String removeKdigits(String num, int k) {
@@ -30,6 +30,7 @@ public class DeleteKDigits {
             Nums[i] = (int) num.charAt(i) - 48;
         }
 
+        // 贪心，栈
         for (int i = 0; i < Nums.length; ) {
             if (i == 0 || stack.isEmpty()) {
                 stack.push(Nums[i]);
@@ -50,7 +51,7 @@ public class DeleteKDigits {
 
         int flag = 0;
         while (!stack.isEmpty()) {
-            if (stack.getLast() == 0 && flag == 0) {
+            if (stack.peekLast() == 0 && flag == 0) {
                 stack.pollLast();
                 continue;
             }
