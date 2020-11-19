@@ -9,10 +9,16 @@ public class NextPermutation {
     @Test
     public void test() {
         NextPermutation nextPermutation = new NextPermutation();
-        int[] nums = {2, 3, 1, 3, 3};
-        nextPermutation.nextPermutation(nums);
-        for (int i : nums) {
-            System.out.println(i);
+//        int[] nums = {2, 3, 1, 3, 3};
+//        nextPermutation.nextPermutation(nums);
+//        for (int i : nums) {
+//            System.out.println(i);
+//        }
+
+        int[] nums1 = {0, 1, 0, 3, 12};
+        nextPermutation.moveZeroes(nums1);
+        for (int num : nums1) {
+            System.out.println(num);
         }
     }
 
@@ -68,5 +74,20 @@ public class NextPermutation {
             }
         }
         return 0;
+    }
+
+    public void moveZeroes(int[] nums) {
+        int nzero = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                nzero++;
+            } else {
+                nums[i - nzero] = nums[i];
+            }
+        }
+
+        for (int i = 0; i < nzero; ++i) {
+            nums[nums.length - 1 - i] = 0;
+        }
     }
 }

@@ -4,8 +4,10 @@ public class TreeNode {
     int val;
     public TreeNode left;
     public TreeNode right;
-    public TreeNode(int x) { val = x; }
 
+    public TreeNode(int x) {
+        val = x;
+    }
 
 
     public boolean isValidBST(TreeNode root) {
@@ -22,5 +24,20 @@ public class TreeNode {
         else
             return false;
     }
+
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortToBSTHelper(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode sortToBSTHelper(int[] nums, int left, int right) {
+        if (left > right)
+            return null;
+        int mid = (left + right) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = sortToBSTHelper(nums, left, mid - 1);
+        root.right = sortToBSTHelper(nums, mid + 1, right);
+        return root;
+    }
+
 
 }
