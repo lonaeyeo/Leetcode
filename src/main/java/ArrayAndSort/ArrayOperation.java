@@ -1,4 +1,4 @@
-package Array;
+package ArrayAndSort;
 
 import org.junit.Test;
 
