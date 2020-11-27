@@ -126,4 +126,23 @@ public class ArrayOperation {
         }
         return ans.toString();
     }
+
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        Map<Integer,Integer> countAB = new HashMap<>();
+        Map<Integer,Integer> countCD = new HashMap<>();
+        int ans = 0;
+
+        for (int a: A)
+            for (int b: B) {
+                countAB.put(a+b, 1 + countAB.getOrDefault(a+b, 0));
+            }
+
+        for (int c: C)
+            for (int d: D) {
+                if (countAB.containsKey(-c-d)) {
+                    ans += countAB.get(-c-d);
+                }
+            }
+        return ans;
+    }
 }
