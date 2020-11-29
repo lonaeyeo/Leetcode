@@ -1,25 +1,18 @@
 package ArrayAndSort;
 
+import com.sun.xml.internal.org.jvnet.mimepull.CleanUpExecutorFactory;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class LargestGap {
+public class ToughClassP1 {
 
     @Test
     public void test() {
-        System.out.println(LargestGap.maximunGapSimplest(new int[]{1, 10000000}));
-    }
-
-    public static int maximunGapSimplest(int[] nums) {
-        if (nums.length <= 1)
-            return 0;
-        Arrays.sort(nums);
-        int ans = 0;
-        for (int i = 1; i < nums.length; ++i) {
-            ans = Math.max(ans, nums[i] - nums[i - 1]);
-        }
-        return ans;
+        ToughClassP1 toughClassP1 = new ToughClassP1();
+//        System.out.println(ToughClassP1.reversePairs(new int[]{1, 3, 2, 3, 1}));
+//        System.out.println(Integer.toBinaryString(Integer.MAX_VALUE >> 1));
+//        System.out.println(Integer.toBinaryString(Integer.MAX_VALUE));
     }
 
     public static int maximumGap(int[] nums) {
@@ -64,4 +57,6 @@ public class LargestGap {
         }
         return ans;
     }
+
+
 }
