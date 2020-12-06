@@ -272,11 +272,38 @@ public class BinaryTreeOperation {
 
     // 判断是否平衡二叉树
     public boolean isBalanced(TreeNode root) {
-
+        if (root == null)
+            return true;
+        else
+            return height(root) >= 0;
     }
 
-    public int isBalanced (TreeNode root) {
+    public int height(TreeNode root) {
         if (root == null)
             return 0;
+
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1)
+            return -1;
+        else
+            return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    // 最小深度
+    public int minDepth(TreeNode root) {
+        if (root == null)
+            return 0;
+        if (root.left == null && root.right == null)
+            return 1;
+
+        int minD = Integer.MAX_VALUE;
+        if (root.left != null)
+            minD = Math.min(minD, minDepth(root.left));
+        if (root.right != null)
+            minD = Math.min(minD, minDepth(root.right));
+
+        return minD + 1;
     }
 }

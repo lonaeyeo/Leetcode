@@ -1,6 +1,7 @@
 package ArrayAndSort;
 
 import org.junit.Test;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.*;
 
@@ -153,5 +154,22 @@ public class ArrayOperation {
                 return A[i] + A[i - 1] + A[i - 2];
         }
         return 0;
+    }
+
+    // 杨辉三角
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> results = new ArrayList<>();
+
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> currRow = new ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i)
+                    currRow.add(1);
+                else
+                    currRow.add(results.get(i - 1).get(j - 1) + results.get(i -1 ).get(j));
+            }
+            results.add(currRow);
+        }
+        return results;
     }
 }
