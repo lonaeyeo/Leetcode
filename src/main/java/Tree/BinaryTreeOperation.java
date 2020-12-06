@@ -4,6 +4,7 @@ import org.junit.Test;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,4 +93,106 @@ public class BinaryTreeOperation {
             else return false;
         else return false;
     }
+
+    @Test
+    public void test() {
+        TreeNode n1 = new TreeNode(1);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(3);
+        n1.left = n2;
+        n1.right = n3;
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n5 = new TreeNode(5);
+        n2.left = n4;
+        n3.right = n5;
+        BinaryTreeOperation binaryTreeOperation = new BinaryTreeOperation();
+        binaryTreeOperation.zigzagLevelOrder1(n1);
+    }
+
+    public List<List<Integer>> zigzagLevelOrder1(TreeNode root) {
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+
+
+        if (root == null)
+            return lists;
+
+        int currLevelNum = 0;
+        int flag = 1;
+        List<Integer> list1 = new LinkedList<>();
+        list1.add(root.val);
+        lists.add(list1);
+        queue.offerLast(root);
+
+        while (!queue.isEmpty()) {
+            LinkedList<Integer> list = new LinkedList<>();
+            currLevelNum = queue.size();
+            while (currLevelNum != 0) {
+                TreeNode curr = queue.pollFirst();
+                if (curr.left != null) {
+                    // 判断从左到右，还是从右到左（flag为0表示从左到右）
+                    if (flag == 0) list.addLast(curr.left.val);
+                    else list.addFirst(curr.left.val);
+                    queue.offerLast(curr.left);
+                }
+                if (curr.right != null) {
+                    // 判断从左到右，还是从右到左（flag为0表示从左到右）
+                    if (flag == 0) list.addLast(curr.right.val);
+                    else list.addFirst(curr.right.val);
+                    queue.offerLast(curr.right);
+                }
+                --currLevelNum;
+            }
+            flag = flag == 0 ? 1 : 0;
+            if (list.isEmpty())
+                continue;
+            lists.add(list);
+        }
+
+        return lists;
+    }
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<List<Integer>>();
+        }
+
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+
+        // add the root element with a delimiter to kick off the BFS loop
+        // node_queue 始终从左到右
+        LinkedList<TreeNode> node_queue = new LinkedList<TreeNode>();
+        node_queue.addLast(root);
+        node_queue.addLast(null);
+
+        // level_list 看情况
+        LinkedList<Integer> level_list = new LinkedList<Integer>();
+        boolean is_order_left = true;
+
+        while (node_queue.size() > 0) {
+            TreeNode curr_node = node_queue.pollFirst();
+            if (curr_node != null) {
+                if (is_order_left)
+                    level_list.addLast(curr_node.val);
+                else
+                    level_list.addFirst(curr_node.val);
+
+                if (curr_node.left != null)
+                    node_queue.addLast(curr_node.left);
+                if (curr_node.right != null)
+                    node_queue.addLast(curr_node.right);
+
+            } else {
+                // we finish the scan of one level
+                results.add(level_list);
+                level_list = new LinkedList<Integer>();
+                // prepare for the next level
+                if (node_queue.size() > 0)
+                    node_queue.addLast(null);
+                is_order_left = !is_order_left;
+            }
+        }
+        return results;
+    }
+
 }
