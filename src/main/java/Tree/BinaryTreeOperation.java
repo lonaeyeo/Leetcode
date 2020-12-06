@@ -3,10 +3,7 @@ package Tree;
 import org.junit.Test;
 import sun.reflect.generics.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class BinaryTreeOperation {
 
@@ -195,4 +192,31 @@ public class BinaryTreeOperation {
         return results;
     }
 
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        // 留意 length 和 length-1
+        return myBuildTree(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+    }
+
+    private Map<Integer, Integer> inorderMap;
+
+    public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+        if (preorderLeft > preorderRight)
+            return null;
+
+        int preorderRoot = preorderLeft;
+        int inorderRoot = inorderMap.get(preorder[preorderRoot]);
+        int leftNodeNums = inorderRoot - inorderLeft;
+        TreeNode root = new TreeNode(preorder[preorderRoot]);
+
+        // 如果此时左子树不存在，势必会造成下次递归出现 preorderLeft>preorderRight，所以需处理这种情况
+        root.left = myBuildTree(preorder, inorder, preorderLeft + 1, preorderLeft + leftNodeNums, inorderLeft, inorderRoot - 1);
+        root.right = myBuildTree(preorder, inorder, preorderLeft + leftNodeNums + 1, preorderRight, inorderRoot + 1, inorderRight);
+
+        return root;
+    }
 }
