@@ -1,7 +1,6 @@
 package Tree;
 
 import org.junit.Test;
-import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
 
@@ -192,7 +191,7 @@ public class BinaryTreeOperation {
         return results;
     }
 
-
+    // 中序和前序
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         inorderMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
@@ -216,6 +215,37 @@ public class BinaryTreeOperation {
         // 如果此时左子树不存在，势必会造成下次递归出现 preorderLeft>preorderRight，所以需处理这种情况
         root.left = myBuildTree(preorder, inorder, preorderLeft + 1, preorderLeft + leftNodeNums, inorderLeft, inorderRoot - 1);
         root.right = myBuildTree(preorder, inorder, preorderLeft + leftNodeNums + 1, preorderRight, inorderRoot + 1, inorderRight);
+
+        return root;
+    }
+
+    @Test
+    public void testBuildTree1() {
+        BinaryTreeOperation binaryTreeOperation = new BinaryTreeOperation();
+        binaryTreeOperation.buildTree1(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
+    }
+
+    // 中序和后序
+    public TreeNode buildTree1(int[] inorder, int[] postorder) {
+        inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        // 留意 length 和 length-1
+        return myBuildTree1(postorder, inorder, 0, postorder.length - 1, 0, inorder.length - 1);
+    }
+
+    public TreeNode myBuildTree1(int[] postorder, int[] inorder, int postorderLeft, int postorderRight, int inorderLeft, int inorderRight) {
+        if (postorderLeft > postorderRight)
+            return null;
+
+        int postorderRoot = postorderRight;
+        int inorderRoot = inorderMap.get(postorder[postorderRoot]);
+        int leftNodeNums = inorderRoot - inorderLeft;
+        TreeNode root = new TreeNode(inorder[inorderRoot]);
+
+        root.left = myBuildTree1(postorder, inorder, postorderLeft, postorderLeft + leftNodeNums - 1, inorderLeft, inorderRoot - 1);
+        root.right = myBuildTree1(postorder, inorder, postorderLeft + leftNodeNums, postorderRoot - 1, inorderRoot + 1, inorderRight);
 
         return root;
     }
