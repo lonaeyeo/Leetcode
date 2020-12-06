@@ -249,4 +249,24 @@ public class BinaryTreeOperation {
 
         return root;
     }
+
+    // 层序遍历，从底向上
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> results = new LinkedList<>();
+        levelOrderBottomDFS(root, 1, results);
+        return results;
+    }
+
+    public void levelOrderBottomDFS(TreeNode root, int depth, List<List<Integer>> results) {
+        if (root == null)
+            return;
+
+        if (depth > results.size())
+            // 将新的list添加至总列表的首位
+            results.add(0, new ArrayList<>());
+
+        results.get(results.size() - depth).add(root.val);
+        levelOrderBottomDFS(root.left, depth + 1, results);
+        levelOrderBottomDFS(root.right, depth + 1, results);
+    }
 }
