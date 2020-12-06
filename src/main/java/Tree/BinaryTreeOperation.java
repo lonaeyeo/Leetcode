@@ -269,4 +269,14 @@ public class BinaryTreeOperation {
         levelOrderBottomDFS(root.left, depth + 1, results);
         levelOrderBottomDFS(root.right, depth + 1, results);
     }
+
+    // 判断是否平衡二叉树
+    public boolean isBalanced(TreeNode root) {
+
+    }
+
+    public int isBalanced (TreeNode root) {
+        if (root == null)
+            return 0;
+    }
 }
