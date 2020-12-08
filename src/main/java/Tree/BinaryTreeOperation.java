@@ -306,4 +306,23 @@ public class BinaryTreeOperation {
 
         return minD + 1;
     }
+
+    // 求一条root到叶子节点==sum的路线
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null)
+            return false;
+        return hasPathSumHelper(root, sum, 0);
+    }
+
+    public boolean hasPathSumHelper(TreeNode root, int sum, int currSum) {
+        if (root == null)
+            return false;
+
+        if (root.val + currSum == sum)
+            if (root.left == null && root.right == null)
+                return true;
+
+        // 得考虑sum是负值的可能性，所以不要剪枝
+        return hasPathSumHelper(root.left, sum, root.val + currSum) || hasPathSumHelper(root.right, sum, root.val + currSum);
+    }
 }
