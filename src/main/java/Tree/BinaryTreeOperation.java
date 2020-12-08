@@ -307,7 +307,7 @@ public class BinaryTreeOperation {
         return minD + 1;
     }
 
-    // 求一条root到叶子节点==sum的路线
+    // 是否存在root到叶子节点==sum的路线
     public boolean hasPathSum(TreeNode root, int sum) {
         if (root == null)
             return false;
@@ -324,5 +324,35 @@ public class BinaryTreeOperation {
 
         // 得考虑sum是负值的可能性，所以不要剪枝
         return hasPathSumHelper(root.left, sum, root.val + currSum) || hasPathSumHelper(root.right, sum, root.val + currSum);
+    }
+
+    // 求root到叶子节点==sum的路线
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> paths = new LinkedList<>();
+        if (root == null)
+            return paths;
+
+        pathSumHelper(root, sum, 0, paths);
+        return paths;
+    }
+
+    public int pathSumHelper(TreeNode root, int sum, int currSum, List<List<Integer>> lists) {
+        if (root == null)
+            return 0;
+
+        if (root.val + currSum == sum)
+            if (root.left == null && root.right == null) {
+                List<Integer> path = new LinkedList<>();
+                path.add(0, root.val);
+                lists.add(0, path);
+                return 1;
+            }
+
+        int pathsNum = pathSumHelper(root.left, sum, root.val + currSum, lists) + pathSumHelper(root.right, sum, root.val + currSum, lists);
+
+        for (int i = 0; i < pathsNum; i++)
+            lists.get(i).add(0, root.val);
+
+        return pathsNum;
     }
 }
