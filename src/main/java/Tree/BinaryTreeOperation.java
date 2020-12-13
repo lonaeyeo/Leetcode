@@ -355,4 +355,35 @@ public class BinaryTreeOperation {
 
         return pathsNum;
     }
+
+    // 二叉树展开成为链表
+    public void flatten(TreeNode root) {
+        if (root != null)
+            flattenHelper(root);
+    }
+
+        // 获取左右子树的开头节点
+    public TreeNode flattenHelper(TreeNode root) {
+        if (root == null)
+            return null;
+
+        TreeNode leftT = flattenHelper(root.left);
+        TreeNode rightT = flattenHelper(root.right);
+
+        // 记得清空左子树
+        root.left = null;
+
+        if (leftT != null) {
+            root.right = leftT;
+            while (leftT.right != null) {
+                leftT = leftT.right;
+            }
+        } else{
+            leftT = root;
+        }
+        if (rightT != null)
+            leftT.right = rightT;
+
+        return root;
+    }
 }
