@@ -1,4 +1,4 @@
-import Tree.TreeNode;
+import BinaryTree.TreeNode;
 import org.junit.Test;
 
 import java.util.Arrays;

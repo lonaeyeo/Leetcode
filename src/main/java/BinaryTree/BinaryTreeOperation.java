@@ -1,7 +1,6 @@
-package Tree;
+package BinaryTree;
 
 import org.junit.Test;
-import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
 

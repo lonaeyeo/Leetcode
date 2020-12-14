@@ -1,4 +1,4 @@
-package Tree;
+package BinaryTree;
 
 import org.junit.Test;
 

@@ -1,6 +1,4 @@
-package Tree;
-
-import java.util.ArrayList;
+package BinaryTree;
 
 public class TreeNode {
     int val;
