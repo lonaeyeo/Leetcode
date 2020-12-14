@@ -1,6 +1,7 @@
 package Tree;
 
 import org.junit.Test;
+import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
 
@@ -362,7 +363,7 @@ public class BinaryTreeOperation {
             flattenHelper(root);
     }
 
-        // 获取左右子树的开头节点
+    // 获取左右子树的开头节点
     public TreeNode flattenHelper(TreeNode root) {
         if (root == null)
             return null;
@@ -378,12 +379,51 @@ public class BinaryTreeOperation {
             while (leftT.right != null) {
                 leftT = leftT.right;
             }
-        } else{
+        } else {
             leftT = root;
         }
         if (rightT != null)
             leftT.right = rightT;
 
         return root;
+    }
+
+    // 前序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new LinkedList<>();
+        if (root == null)
+            return ans;
+        preorderTraversalHelper(root, ans);
+        return ans;
+    }
+
+    public void preorderTraversalHelper(TreeNode root, List<Integer> list) {
+        if (root == null)
+            return;
+        list.add(root.val);
+        preorderTraversalHelper(root.left, list);
+        preorderTraversalHelper(root.right, list);
+    }
+
+    // 后序遍历（迭代方法）
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new LinkedList<>();
+        if (root == null)
+            return list;
+        Deque<TreeNode> stack = new LinkedList<>();
+        Set<TreeNode> set = new HashSet<>();
+
+        while (root != null || !stack.isEmpty()) {
+            if (root == null && set.contains(stack.peek())) {
+                list.add(stack.pop().val);
+            } else if (root == null) {
+                set.add(stack.peek());
+                root = stack.peek().right;
+            } else {
+                stack.push(root);
+                root = root.left;
+            }
+        }
+        return list;
     }
 }
