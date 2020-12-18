@@ -2,6 +2,7 @@ package BinaryTree;
 
 import org.junit.Test;
 
+import javax.print.DocFlavor;
 import java.util.*;
 
 public class BinaryTreeOperation {
@@ -425,4 +426,27 @@ public class BinaryTreeOperation {
         }
         return list;
     }
+
+    // 按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if (root == null)
+            return list;
+        Deque<TreeNode> stack = new LinkedList<>();
+        stack.offerLast(root);
+        while (!stack.isEmpty()) {
+            int currSize = stack.size();
+            for (int i = 0; i < currSize; i++) {
+                TreeNode curr = stack.pollFirst();
+                if (i == currSize - 1) {
+                    list.add(curr.val);
+                }
+                if (curr.left != null) stack.offerLast(curr.left);
+                if (curr.right != null) stack.offerLast(curr.right);
+            }
+        }
+
+        return list;
+    }
+
 }

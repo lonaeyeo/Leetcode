@@ -1,31 +1,32 @@
 package BinaryTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
 
-    public void recoverTree(TreeNode root) {
-        TreeNode max = new TreeNode(Integer.MAX_VALUE);
-        TreeNode min = new TreeNode(Integer.MIN_VALUE);
-        recoverTreeHelper(root, min, max);
+    List<Integer> nodesSorted;
+    int index;
+
+    public BinarySearchTree(TreeNode root) {
+        this.nodesSorted = new ArrayList<>();
+        this.index = -1;
+        this.inOrder(root);
     }
 
-    public void recoverTreeHelper(TreeNode root, TreeNode lower, TreeNode upper) {
+    public void inOrder(TreeNode root) {
         if (root == null)
             return;
-        if (root.val < lower.val) {
-            swapValue(root, lower);
-            return;
-        } else if (root.val > upper.val) {
-            swapValue(root, upper);
-            return;
-        }
-
-        recoverTreeHelper(root.left, lower, root);
-        recoverTreeHelper(root.right, root, upper);
+        inOrder(root.left);
+        nodesSorted.add(root.val);
+        inOrder(root.right);
     }
 
-    public void swapValue(TreeNode n1, TreeNode n2) {
-        int temp = n1.val;
-        n1.val = n2.val;
-        n2.val = temp;
+    public int next() {
+        return this.nodesSorted.get(++this.index);
+    }
+
+    public boolean hasNext() {
+        return this.index + 1 < this.nodesSorted.size();
     }
 }
