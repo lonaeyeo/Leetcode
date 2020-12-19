@@ -3,12 +3,12 @@ package BinaryTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinarySearchTree {
+public class BinarySearchTreeOperation {
 
     List<Integer> nodesSorted;
     int index;
 
-    public BinarySearchTree(TreeNode root) {
+    public BinarySearchTreeOperation(TreeNode root) {
         this.nodesSorted = new ArrayList<>();
         this.index = -1;
         this.inOrder(root);
