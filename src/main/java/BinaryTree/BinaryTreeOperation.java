@@ -449,4 +449,16 @@ public class BinaryTreeOperation {
         return list;
     }
 
+    // 求完全二叉树节点
+    public int countNodes(TreeNode root) {
+        if (root == null)
+            return 0;
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+
+    @Test
+    public void test2(){
+        int i =4;
+        System.out.println(i << 1);
+    }
 }
