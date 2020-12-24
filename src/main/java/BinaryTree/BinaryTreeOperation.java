@@ -450,9 +450,43 @@ public class BinaryTreeOperation {
 
     // 求完全二叉树节点
     public int countNodes(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return 0;
-        return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+        int level = 0;
+        TreeNode node = root;
+        while (node.left != null) {
+            level++;
+            node = node.left;
+        }
+        int low = 1 << level, high = (1 << (level + 1)) - 1;
+        while (low < high) {
+            int mid = (high - low + 1) / 2 + low;
+            if (exists(root, level, mid)) {
+                low = mid;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return low;
+    }
+
+    public boolean exists(TreeNode root, int level, int k) {
+        // 假设level=5，bits=01000，k=1XXXX
+        // 如果k=10xxx，表示节点在右子树，k=11xxx，则是左子树
+        // 如果k=100xx，表示右、右；k=101xx，表示右、左；
+        int bits = 1 << (level - 1);
+        TreeNode node = root;
+        while (node != null && bits > 0) {
+            if ((bits & k) == 0) {
+                node = node.left;
+            } else {
+                node = node.right;
+            }
+            // bits向右移一位
+            bits >>= 1;
+        }
+        return node != null;
     }
 
     @Test
