@@ -2,7 +2,6 @@ package BinaryTree;
 
 import org.junit.Test;
 
-import javax.print.DocFlavor;
 import java.util.*;
 
 public class BinaryTreeOperation {
@@ -457,10 +456,27 @@ public class BinaryTreeOperation {
     }
 
     @Test
-    public void test2(){
-        int i =4;
+    public void test2() {
+        int i = 4;
         System.out.println(i << 1);
     }
 
+    // 最近公共祖先
+    TreeNode ans = null;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        dfsCommonAncestor(root, p, q);
 
+        return ans;
+    }
+
+    private boolean dfsCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null)
+            return false;
+        boolean left = dfsCommonAncestor(root.left, p, q);
+        boolean right = dfsCommonAncestor(root.right, p, q);
+
+        if ((left && right) || ((root == p || root == q) && (left || right)))
+            ans = root;
+        return left || right || (root == p || root == q);
+    }
 }
