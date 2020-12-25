@@ -20,12 +20,6 @@ public class BinaryTreeOperation {
         inorderTraversal(root.right, list);
     }
 
-    @Test
-    public void test1() {
-        BinaryTreeOperation binaryTree = new BinaryTreeOperation();
-        System.out.println(binaryTree.numTrees(3));
-    }
-
     public int numTrees(int n) {
         int[] G = new int[n + 1];
         G[0] = 1;
@@ -88,21 +82,6 @@ public class BinaryTreeOperation {
                 return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
             else return false;
         else return false;
-    }
-
-    @Test
-    public void test() {
-        TreeNode n1 = new TreeNode(1);
-        TreeNode n2 = new TreeNode(2);
-        TreeNode n3 = new TreeNode(3);
-        n1.left = n2;
-        n1.right = n3;
-        TreeNode n4 = new TreeNode(4);
-        TreeNode n5 = new TreeNode(5);
-        n2.left = n4;
-        n3.right = n5;
-        BinaryTreeOperation binaryTreeOperation = new BinaryTreeOperation();
-        binaryTreeOperation.zigzagLevelOrder1(n1);
     }
 
     public List<List<Integer>> zigzagLevelOrder1(TreeNode root) {
@@ -471,7 +450,7 @@ public class BinaryTreeOperation {
         return low;
     }
 
-    public boolean exists(TreeNode root, int level, int k) {
+    private boolean exists(TreeNode root, int level, int k) {
         // 假设level=5，bits=01000，k=1XXXX
         // 如果k=10xxx，表示节点在右子树，k=11xxx，则是左子树
         // 如果k=100xx，表示右、右；k=101xx，表示右、左；
@@ -489,14 +468,9 @@ public class BinaryTreeOperation {
         return node != null;
     }
 
-    @Test
-    public void test2() {
-        int i = 4;
-        System.out.println(i << 1);
-    }
-
     // 最近公共祖先
     TreeNode ans = null;
+
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         dfsCommonAncestor(root, p, q);
 
@@ -513,4 +487,65 @@ public class BinaryTreeOperation {
             ans = root;
         return left || right || (root == p || root == q);
     }
+
+
+    /*
+     * 序列化以及反序列化
+     *
+     */
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        //tree: [v1,v2,null,...]
+        StringBuilder res = new StringBuilder("[");
+        Deque<TreeNode> queue = new LinkedList();
+        queue.offerLast(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.pollFirst();
+            if (cur == null) {
+                res.append("null,");
+            } else {
+                res.append(cur.val + ",");
+                queue.offerLast(cur.left);
+                queue.offerLast(cur.right);
+            }
+        }
+        res.setLength(res.length() - 1);
+        res.append("]");
+        return res.toString();
+    }
+
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.substring(1, data.length() - 1).split(",");
+        TreeNode root = getNode(nodes[0]);
+        Deque<TreeNode> parents = new LinkedList();
+        TreeNode parent = root;
+        boolean isLeft = true;
+        for (int i = 1; i < nodes.length; i++) {
+            TreeNode cur = getNode(nodes[i]);
+            // 先加左后加右
+            if (isLeft) {
+                parent.left = cur;
+            } else {
+                parent.right = cur;
+            }
+            if (cur != null) {
+                parents.offerLast(cur);
+            }
+            isLeft = !isLeft;
+            // 右子树加完，弹出当前节点
+            if (isLeft) {
+                parent = parents.pollFirst();
+            }
+        }
+        return root;
+    }
+
+    private TreeNode getNode(String val) {
+        if (val.equals("null")) {
+            return null;
+        }
+        return new TreeNode(Integer.valueOf(val));
+    }
+
+
 }
