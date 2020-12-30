@@ -498,4 +498,9 @@ public class BinaryTreeOperation {
             ans = root;
         return left || right || (root == p || root == q);
     }
+
+    // 打家劫舍：不同抢劫相邻房子
+    public int rob(TreeNode root) {
+
+    }
 }
