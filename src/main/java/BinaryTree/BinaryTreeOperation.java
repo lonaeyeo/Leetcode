@@ -3,6 +3,7 @@ package BinaryTree;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class BinaryTreeOperation {
 
@@ -482,6 +483,7 @@ public class BinaryTreeOperation {
 
     // 最近公共祖先
     TreeNode ans = null;
+
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         dfsCommonAncestor(root, p, q);
 
@@ -499,8 +501,75 @@ public class BinaryTreeOperation {
         return left || right || (root == p || root == q);
     }
 
-    // 打家劫舍：不同抢劫相邻房子
-    public int rob(TreeNode root) {
+    // 打家劫舍：不能打劫相邻房子
+    // f表示当前节点下，包含当前节点val的sum，f(curr) = g(curr.l) + g(curr.r) + curr.val
+    // g表示当前节点下，不包含当前节点val的sum，g(curr) = Max(f(curr.l), g(curr.l)) + Max(f(curr.r), g(curr.r))
+    Map<TreeNode, Integer> f = new HashMap<>();
+    Map<TreeNode, Integer> g = new HashMap<>();
 
+    public int rob(TreeNode root) {
+        dfs(root);
+        return Math.max(f.getOrDefault(root, 0), g.getOrDefault(root, 0));
     }
+
+    private void dfs(TreeNode root) {
+        if (root == null)
+            return;
+        dfs(root.left);
+        dfs(root.right);
+        f.put(root, g.getOrDefault(root.left, 0) + g.getOrDefault(root.right, 0) + root.val);
+        g.put(root, Math.max(f.getOrDefault(root.left, 0), g.getOrDefault(root.left, 0)) + Math.max(f.getOrDefault(root.right, 0), g.getOrDefault(root.right, 0)));
+    }
+
+    @Test
+    public void testRob() {
+//        BinaryTreeOperation binaryTreeOperation = new BinaryTreeOperation();
+//        TreeNode root = binaryTreeOperation.deserialize("[3,2,3,null,3,null,1]");
+//        System.out.println(binaryTreeOperation.rob(root));
+        String str = " i'mastring";
+        Pattern pattern = Pattern.compile("^[\\s+]");
+        Pattern pattern2 = Pattern.compile("\\s+");
+
+        System.out.println(pattern.matcher(str).find());
+        System.out.println(pattern2.matcher(str).find());
+        System.out.println(str);
+    }
+
+    /**
+     * 根据STring构建二叉树
+     */
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.substring(1, data.length() - 1).split(",");
+        TreeNode root = getNode(nodes[0]);
+        Deque<TreeNode> parents = new LinkedList();
+        TreeNode parent = root;
+        boolean isLeft = true;
+        for (int i = 1; i < nodes.length; i++) {
+            TreeNode cur = getNode(nodes[i]);
+            // 先加左后加右
+            if (isLeft) {
+                parent.left = cur;
+            } else {
+                parent.right = cur;
+            }
+            if (cur != null) {
+                parents.offerLast(cur);
+            }
+            isLeft = !isLeft;
+            // 右子树加完，弹出当前节点
+            if (isLeft) {
+                parent = parents.pollFirst();
+            }
+        }
+        return root;
+    }
+
+    private TreeNode getNode(String val) {
+        if (val.equals("null")) {
+            return null;
+        }
+        return new TreeNode(Integer.valueOf(val));
+    }
+
+
 }
