@@ -1,9 +1,7 @@
 package BinaryTree;
 
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class RouteOperation {
 
@@ -45,6 +43,41 @@ public class RouteOperation {
         maxSum = Math.max(currSum, maxSum);
 
         return root.val + Math.max(leftBranch, rightBranch);
+    }
+
+    // 给定一个sum，求满足sum的路径总数
+    public int pathSum(TreeNode root, int sum) {
+        // key是前缀和，value是前缀和的数量
+        Map<Integer, Integer> prefixSumMap = new HashMap<>();
+        prefixSumMap.put(0, 1);
+        return recursionPathSum(root, prefixSumMap, sum, 0);
+    }
+
+    /**
+     *
+     * @param node
+     * @param prefixSumMap  map
+     * @param target sum
+     * @param prefixSum 当前节点的前缀和
+     * @return 当前节点下的满足target的路径总数
+     */
+    private int recursionPathSum(TreeNode node, Map<Integer, Integer> prefixSumMap, int target, int prefixSum) {
+        if (node == null)
+            return 0;
+        int currSum = prefixSum + node.val;
+        // 满足currSum2 - currSum1(prev) = targer 即为一条路径和为target的路线
+        int res = prefixSumMap.getOrDefault(currSum - target, 0);
+        // 将当前节点的前缀和加入map，后续子树需用到
+        prefixSumMap.put(currSum, prefixSumMap.getOrDefault(currSum, 0) + 1);
+
+        res += recursionPathSum(node.left, prefixSumMap, target, currSum);
+        res += recursionPathSum(node.right, prefixSumMap, target, currSum);
+
+        // 作为子树的前缀和，不应影响到父节点的计算决策
+        // 也不会影响同级的兄弟子树
+        prefixSumMap.put(currSum, prefixSumMap.get(currSum) - 1);
+
+        return res;
     }
 
 

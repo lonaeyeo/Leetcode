@@ -38,8 +38,8 @@ public class BinarySearchTreeOperation {
     public int kthSmallest(TreeNode root, int k) {
         Deque<TreeNode> stack = new LinkedList<>();
 
-        while(!stack.isEmpty() || root != null){
-            while(root != null) {
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
@@ -50,5 +50,17 @@ public class BinarySearchTreeOperation {
         }
 
         return root.val;
+    }
+
+    // 二叉搜索树的最大公共祖先
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        while (true) {
+            if (root.val > p.val && root.val > q.val)
+                root = root.left;
+            else if (root.val < p.val && root.val < q.val)
+                root = root.right;
+            else
+                return root;
+        }
     }
 }
