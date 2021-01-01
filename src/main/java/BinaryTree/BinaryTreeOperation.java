@@ -536,7 +536,7 @@ public class BinaryTreeOperation {
     }
 
     /**
-     * 根据STring构建二叉树
+     * 根据STring构建二叉树，反序列化
      */
     public TreeNode deserialize(String data) {
         String[] nodes = data.substring(1, data.length() - 1).split(",");

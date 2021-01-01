@@ -2,10 +2,8 @@ package BinaryTree;
 
 import sun.reflect.generics.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.*;
 
 public class BinarySearchTreeOperation {
 
@@ -63,4 +61,52 @@ public class BinarySearchTreeOperation {
                 return root;
         }
     }
+
+    // 二叉搜索树的序列化及反序列化
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        postOrder(root, sb);
+        if (sb.length() > 0)
+            sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 利用后序遍历[左左左…… 右右右…… 中]
+    private void postOrder(TreeNode root, StringBuilder sb) {
+        if (root == null)
+            return;
+
+        postOrder(root.left, sb);
+        postOrder(root.right, sb);
+
+        sb.append(root.val);
+        sb.append(' ');
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty())
+            return null;
+        ArrayDeque<Integer> nums = new ArrayDeque<>();
+        for (String s : data.split("\\s+")) {
+            nums.add(Integer.valueOf(s));
+        }
+        return numsToNodes(nums, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+    }
+
+    private TreeNode numsToNodes(ArrayDeque<Integer> nums, int low, int high) {
+        if (nums.size() == 0)
+            return null;
+        int currNum = nums.getLast();
+        if (currNum < low || currNum > high)
+            return null;
+        nums.removeLast();
+        TreeNode curr = new TreeNode(currNum);
+        curr.right = numsToNodes(nums, currNum, high);
+        curr.left = numsToNodes(nums, low, currNum);
+        return curr;
+    }
+
 }
