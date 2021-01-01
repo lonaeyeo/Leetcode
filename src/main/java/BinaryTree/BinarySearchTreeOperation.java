@@ -109,4 +109,65 @@ public class BinarySearchTreeOperation {
         return curr;
     }
 
+    // 删除二叉搜索树中的节点
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null)
+            return root;
+        // prev为待删节点的父亲树
+        TreeNode prev = new TreeNode();
+        TreeNode curr = root;
+        prev.left = root;
+        // 标记删除的是左子树还是右子树，0为表示待删节点curr位于prev的左子树
+        int flag = 0;
+        // 判断删除的点是第几层的
+        int index = 0;
+
+        while (curr.val != key) {
+            prev = curr;
+            if (curr.val < key) {
+                flag = 1;
+                curr = curr.right;
+            } else if (curr.val > key) {
+                flag = 0;
+                curr = curr.left;
+            }
+            ++index;
+            if (curr == null) return root;
+        }
+
+        // 如果删除的是根节点，需调正root的指向，防止原有root指向消失
+        if (index == 0) {
+            // 如果根节点的左空右不空那么root需要指向根节点的右子树
+            if (curr.left == null && curr.right != null)
+                root = curr.right;
+            else
+                root = curr.left;
+        }
+
+        // 如果待删节点无子节点
+        if (curr.left == null && curr.right == null) {
+            prev.left = flag == 0 ? null : prev.left;
+            prev.right = flag == 1 ? null : prev.right;
+            return root;
+        // 如果待删节点的左子树不存在
+        } else if (curr.left == null) {
+            prev.left = flag == 0 ? curr.right : prev.left;
+            prev.right = flag == 1 ? curr.right : prev.right;
+            return root;
+        // 如果待删节点的左子树存在（右子树可能存在，可能不存在）
+        } else {
+            prev.left = flag == 0 ? curr.left : prev.left;
+            prev.right = flag == 1 ? curr.left : prev.right;
+            // 原右子树
+            TreeNode currRight = curr.right;
+            curr = curr.left;
+            while (curr.right != null) {
+                curr = curr.right;
+            }
+            curr.right = currRight;
+        }
+
+        return root;
+    }
+
 }
