@@ -43,6 +43,7 @@ public class MinimumCoverSubstring {
             if (need.containsKey(rchar)) {
                 window.put(rchar, window.getOrDefault(rchar, 0) + 1);
                 // 注意.equals的用法
+                // 如果window中某一字符数量 达到 need的相应字符数量，标记为满足了一个字符
                 if (need.get(rchar).equals(window.get(rchar)))
                     mark++;
             }
