@@ -3,6 +3,8 @@ package SlidingWindow;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class StringSlidingWindow {
@@ -10,7 +12,8 @@ public class StringSlidingWindow {
     @Test
     public void test() {
         StringSlidingWindow stringSlidingWindow = new StringSlidingWindow();
-        System.out.println(stringSlidingWindow.checkInclusion("ab", "eidboaoo"));
+//        System.out.println(stringSlidingWindow.checkInclusion("ab", "eidboaoo"));
+        System.out.println(stringSlidingWindow.findAnagrams("baa", "aa"));
     }
 
     /**
@@ -60,5 +63,57 @@ public class StringSlidingWindow {
         }
 
         return false;
+    }
+
+
+    /**
+     * 找到字符串中所有字母异位词
+     * 给定一个字符串 s 和一个非空字符串 p，找到 s 中所有是 p 的字母异位词的子串，返回这些子串的起始索引。
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] need = new int[26];
+        int[] window = new int[26];
+        // 字母种类的数量
+        int needSize = 0;
+
+        for (int i = 0; i < p.length(); i++) {
+            ++need[p.charAt(i) - 'a'];
+        }
+        for (int i = 0; i < need.length; i++) {
+            needSize = need[i] == 0 ? needSize : needSize + 1;
+        }
+
+        List<Integer> ans = new LinkedList<>();
+        int left = 0;
+        int right = 0;
+        int valid = 0;
+
+        while (right < s.length()) {
+            char r = s.charAt(right);
+            right++;
+
+            if (need[r - 'a'] != 0) {
+                window[r - 'a']++;
+                if (need[r - 'a'] == window[r - 'a'])
+                    valid++;
+            }
+
+            // 如果滑动窗口的大小 >= p的长度，开始缩小
+            while (right - left >= p.length()) {
+                // 如果valid达到needSize，ans添加一个子串的left值
+                if (valid == needSize)
+                    ans.add(left);
+                char l = s.charAt(left);
+                left++;
+
+                if (need[l - 'a'] != 0) {
+                    if (need[l - 'a'] == window[l - 'a'])
+                        valid--;
+                    window[l - 'a']--;
+                }
+            }
+        }
+
+        return ans;
     }
 }
