@@ -116,4 +116,43 @@ public class StringSlidingWindow {
 
         return ans;
     }
+
+
+    /**
+     * 剑指 Offer 48. 最长不含重复字符的子字符串
+     *
+     * @return 子串长度
+     */
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> window = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int start = 0;
+        int maxLen = 0;
+
+        // 当前最长不重复子串的 长度 如果超过剩余未扫描的字符串长度，就没有必要继续往前移动窗口了
+        while (right < s.length() && maxLen <= s.length() - left) {
+            char r = s.charAt(right);
+            right++;
+
+            window.put(r, window.getOrDefault(r, 0) + 1);
+
+            // 如果遇到重复的字符，则窗口开始收缩，直到重复字符不再重复
+            while (window.get(r) > 1) {
+
+                char l = s.charAt(left);
+                left++;
+
+                window.put(l, window.getOrDefault(l, 0) - 1);
+            }
+
+            // 判断是否为最长不重复子串
+            if (right - left > maxLen) {
+                start = left;
+                maxLen = right - left;
+            }
+        }
+
+        return maxLen;
+    }
 }
