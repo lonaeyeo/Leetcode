@@ -13,7 +13,8 @@ public class StringSlidingWindow {
     public void test() {
         StringSlidingWindow stringSlidingWindow = new StringSlidingWindow();
 //        System.out.println(stringSlidingWindow.checkInclusion("ab", "eidboaoo"));
-        System.out.println(stringSlidingWindow.findAnagrams("baa", "aa"));
+//        System.out.println(stringSlidingWindow.findAnagrams("baa", "aa"));
+        System.out.println(stringSlidingWindow.lengthOfLongestSubstring2("abcabcbb"));
     }
 
     /**
@@ -151,6 +152,33 @@ public class StringSlidingWindow {
                 start = left;
                 maxLen = right - left;
             }
+        }
+        return maxLen;
+    }
+
+    /**
+     * 第二种方法，DP+HashMap
+     * dp[j]代表以字符s[j]为结尾的 “最长不重复子字符串” 的长度。
+     * <p>
+     * 当 i<0 ，即 s[j]左边无相同字符，则 dp[j] = dp[j-1] + 1；
+     * 当 dp[j−1]<j−i ，说明字符 s[i]在子字符串 dp[j-1] 区间之外 ，则 dp[j] = dp[j-1] + 1；
+     * 当 dp[j−1]≥j−i ，说明字符 s[i]在子字符串 dp[j-1]区间之中 ，则 dp[j]的左边界由 s[i]决定，即 dp[j] = j - i；
+     */
+    public int lengthOfLongestSubstring2(String s) {
+        // <字符, 下标>
+        Map<Character, Integer> indexMap = new HashMap<>();
+        int maxLen = 0;
+        // 末尾为s[j-1]的不重复子串的长度
+        int tmp = 0;
+
+        for (int j = 0; j < s.length(); j++) {
+            // 获取s[j]上一次出现时的下标位置，如果之前没出现过，默认为-1
+            int i = indexMap.getOrDefault(s.charAt(j), -1);
+            // 重设s[j]最近一次出现时的下标位置
+            indexMap.put(s.charAt(j), j);
+            // - - - - - - -
+            tmp = tmp < j - i ? tmp + 1 : j - i;
+            maxLen = Math.max(maxLen, tmp);
         }
 
         return maxLen;
