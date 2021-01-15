@@ -21,7 +21,6 @@ public class BinarySearchOperation {
         if (divisor == -1 && dividend == Integer.MIN_VALUE) return Integer.MAX_VALUE;
 
         int sign = (dividend ^ divisor) < 0 ? -1 : 1;
-        System.out.println(sign);
         // 将数字转换成负数来处理，更好应对溢出情况 [2^32, 2^32-1]
         dividend = dividend < 0 ? dividend : -dividend;
         divisor = divisor < 0 ? divisor : -divisor;
