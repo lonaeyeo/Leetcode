@@ -8,6 +8,8 @@ public class MedianOfTwoArrays {
      * 高级方法：二分查找法，用一条分割线分割两个数组，左边两个子数组长度 >= 右边两个子数组长度
      * a[i-1] <= b[j] && a[i] >= b[j - 1]
      * 判定条件可以是 if a[i-1] <= b[j]：如果为true，left = mid+1；else，right = mid-1
+     * 时间复杂度：O(log min(m,n))
+     * 空间复杂度：O(1)
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1.length > nums2.length)
@@ -17,8 +19,8 @@ public class MedianOfTwoArrays {
         int l2 = nums2.length;
         int left = 0;
         int right = l1;
-        int leftMax = Integer.MIN_VALUE;
-        int rightMin = Integer.MAX_VALUE;
+        int leftMax = 0;
+        int rightMin = 0;
 
         // 需考虑分割线在数组外的可能性，即a[i-1] | a[i]。当然a[i]不存在
         while (left <= right) {
