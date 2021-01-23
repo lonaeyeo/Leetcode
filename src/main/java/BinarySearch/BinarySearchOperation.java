@@ -82,6 +82,9 @@ public class BinarySearchOperation {
 
     /**
      * 寻找有序数组中target的左右边界
+     * leftBound: 求左边界
+     * rightBound: 求右边界
+     * boundary: 求边界（左右皆可）
      */
     public int[] searchRange(int[] nums, int target) {
         if (nums.length == 0) return new int[]{-1, -1};
@@ -160,5 +163,19 @@ public class BinarySearchOperation {
             return -1;
 
         return isLeft ? left : right;
+    }
+
+    /**
+     * 实现 n次方x
+     */
+    public double myPow(double x, int n) {
+        if (x == 0) return 0;
+        return n > 0 ? quickMul(x, n) : 1 / quickMul(x, -n);
+    }
+
+    private double quickMul(double x, int n) {
+        if (n == 0) return 1.0;
+        double y = quickMul(x, n / 2);
+        return n % 2 == 0 ? y * y : y * y * x;
     }
 }
