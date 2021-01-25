@@ -7,14 +7,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class StringSlidingWindow {
+public class SlidingWindowOperation {
 
     @Test
     public void test() {
-        StringSlidingWindow stringSlidingWindow = new StringSlidingWindow();
+        SlidingWindowOperation slidingWindowOperation = new SlidingWindowOperation();
 //        System.out.println(stringSlidingWindow.checkInclusion("ab", "eidboaoo"));
 //        System.out.println(stringSlidingWindow.findAnagrams("baa", "aa"));
-        System.out.println(stringSlidingWindow.lengthOfLongestSubstring2("abcabcbb"));
+        System.out.println(slidingWindowOperation.lengthOfLongestSubstring2("abcabcbb"));
     }
 
     /**
@@ -183,4 +183,5 @@ public class StringSlidingWindow {
 
         return maxLen;
     }
+
 }

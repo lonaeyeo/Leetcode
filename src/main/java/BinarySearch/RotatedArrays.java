@@ -63,4 +63,39 @@ public class RotatedArrays {
         return min;
     }
 
+    /**
+     * 寻找旋转排序数组中的最小值（包含重复数据）
+     * c
+     * o
+     * o o           o
+     * c o
+     * o
+     */
+    public int findMin2(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int mid = 0;
+
+        while (left <= right) {
+            mid = left + (right - left) / 2;
+
+            /*
+             如果nums[mid]小于nums[right]，那么mid右边的任何数字必定 >= nums[mid]，
+             那就可以排除mid右边部分的数据了；
+             如果nums[mid]大于nums[right]，那么nums必定是个旋转数组，而旋转数组中nums[0] >= nums[n]，
+             所以mid左边的数字必定 >= nums[right]，那么就可以排除mid左边的数据了；
+             如果nums[mid] == nums[right]，并不能去除右部分，但是right--，去掉一个
+             */
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else if (nums[mid] > nums[right]) {
+                left = mid + 1;
+            } else {
+                // 如果恰巧是最小数，那么会通过right--，使得left>right来退出循环
+                --right;
+            }
+        }
+        return nums[mid];
+    }
+
 }
