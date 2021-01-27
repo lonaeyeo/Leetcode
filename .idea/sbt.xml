@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ScalaSbtSettings">
-    <option name="customLauncherEnabled" value="true" />
-    <option name="customLauncherPath" value="D:\lonaeyeo\sbt\bin\sbt-launch.jar" />
-    <option name="customVMPath" />
-    <option name="vmParameters" value="-Dsbt.log.format=true -Dfile.encoding=UTF8 -Dsbt.global.base=D:/lonaeyeo/sbt/.sbt -Dsbt.boot.directory=D:/lonaeyeo/sbt/boot/ -Dsbt.repository.config=D:/lonaeyeo/sbt/conf/repo.properties -Dsbt.ivy.home=D:/lonaeyeo/sbt/.ivy2 -Xmx512M -Xss2M -XX:+CMSClassUnloadingEnabled" />
-  </component>
-</project>

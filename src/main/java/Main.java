@@ -6,15 +6,15 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-//        char[][] matrix = new char[][]{
-//                {'1', '0', '1', '1', '1'},
-//                {'0', '1', '0', '1', '0'},
-//                {'1', '1', '0', '1', '1'},
-//                {'1', '1', '0', '1', '1'},
-//                {'0', '1', '1', '1', '1'}};
-//        System.out.println(Main.maximalRectangle(matrix));
-//        int[] heights = new int[]{1,9,3,8,5};
-//        System.out.println(Main.largestRectangleArea(heights));
+        char[][] matrix = new char[][]{
+                {'1', '0', '1', '1', '1'},
+                {'0', '1', '0', '1', '0'},
+                {'1', '1', '0', '1', '1'},
+                {'1', '1', '0', '1', '1'},
+                {'0', '1', '1', '1', '1'}};
+        System.out.println(Main.maximalRectangle(matrix));
+        int[] heights = new int[]{1,9,3,8,5};
+        System.out.println(Main.largestRectangleArea(heights));
         System.out.println(-Double.MAX_VALUE);
     }
 
