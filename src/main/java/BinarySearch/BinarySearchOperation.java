@@ -144,6 +144,53 @@ public class BinarySearchOperation {
     }
 
     /**
-     *
+     * 搜索二维矩阵
+     * 每行中的整数从左到右按升序排列。
+     * 每行的第一个整数大于前一行的最后一个整数。
      */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix.length == 0)
+            return false;
+        int left = 0;
+        int right = matrix.length * matrix[0].length -1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            int curr = matrix[mid/matrix[0].length][mid%matrix[0].length];
+            if (curr < target)
+                left = mid + 1;
+            else if (curr > target)
+                right = mid - 1;
+            else
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 搜索二维矩阵 II
+     * 每行的元素从左到右升序排列。
+     * 每列的元素从上到下升序排列。
+     */
+    public boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix.length == 0)
+            return false;
+        int row = matrix.length - 1;
+        int col = 0;
+
+        while (row >= 0 && col < matrix[0].length) {
+            int curr = matrix[row][col];
+
+            if (curr > target)
+                // current row are all larger than target
+                --row;
+            else if (curr < target)
+                // column elements above curr are all smaller than target
+                ++col;
+            else
+                return true;
+        }
+        return false;
+    }
+
+
 }
