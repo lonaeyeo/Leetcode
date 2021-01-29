@@ -40,6 +40,37 @@ public class RotatedArrays {
     }
 
     /**
+     * 搜索旋转排序数组 II
+     * 含重复数据
+     */
+    public boolean search2(int[] nums, int target) {
+        if (nums.length == 0)
+            return false;
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) return true;
+            if (nums[left] < nums[mid]) {
+                // 有序空间里不包含target，那么剩余可能性完全取决于 右无序空间
+                if (target >= nums[left] && target < nums[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            } else if (nums[left] > nums[mid]) {
+                if (target > nums[mid] && target <= nums[right])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            } else {
+                // 如果左值和中间值相同，不妨使left+1
+                ++left;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 寻找旋转排序数组中的最小值
      */
     public int findMin(int[] nums) {
@@ -97,5 +128,6 @@ public class RotatedArrays {
         }
         return nums[mid];
     }
+
 
 }

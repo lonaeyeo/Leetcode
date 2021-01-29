@@ -152,10 +152,10 @@ public class BinarySearchOperation {
         if (matrix.length == 0)
             return false;
         int left = 0;
-        int right = matrix.length * matrix[0].length -1;
+        int right = matrix.length * matrix[0].length - 1;
         while (left <= right) {
             int mid = left + ((right - left) >> 1);
-            int curr = matrix[mid/matrix[0].length][mid%matrix[0].length];
+            int curr = matrix[mid / matrix[0].length][mid % matrix[0].length];
             if (curr < target)
                 left = mid + 1;
             else if (curr > target)
@@ -192,5 +192,41 @@ public class BinarySearchOperation {
         return false;
     }
 
+    /**
+     * 寻找峰值
+     * 极大值
+     * nums[-1] == nums[length] == -∞
+     */
+    public int findPeakElement(int[] nums) {
+        return locatePeak(nums, 0, nums.length - 1);
+    }
 
+    private int locatePeak(int[] nums, int left, int right) {
+        if (left == right)
+            return left;
+        int mid = left + (right - left) / 2;
+        // 如果中间值大于右值，那么左边必有极大值，只能改right；
+        // 同理，如果中间值小于右值，那么右边必有极大值，只能改left；
+        // 当空间大小缩小到1的时候，表示此值就是极大值
+        if (nums[mid] > nums[mid + 1])
+            return locatePeak(nums, left, mid);
+        else
+            return locatePeak(nums, mid + 1, right);
+    }
+
+    public int findPeakElement_1(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            // 如果中间值大于右值，那么左边必有极大值，只能改right；
+            // 同理，如果中间值小于右值，那么右边必有极大值，只能改left；
+            if (nums[mid] > nums[mid + 1])
+                right = mid;
+            else
+                left = mid + 1;
+        }
+        // 当 left==right 的时候，表示此值就是极大值
+        return left;
+    }
 }
