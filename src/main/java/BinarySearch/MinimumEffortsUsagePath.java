@@ -59,6 +59,7 @@ public class MinimumEffortsUsagePath {
         int m = heights.length;
         int n = heights[0].length;
         PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+            // 函数返回值>0，那么就把s1排序到s2后面
             public int compare(int[] edge1, int[] edge2) {
                 return edge1[2] - edge2[2];
             }
