@@ -37,6 +37,8 @@ public class MinimumEffortsUsagePath {
                     int y = curr[1] + dirs[i][1];
                     // 每一个点都会被访问到
                     // 判断该点有无过界、是否已访问过，消耗是否不超过mid
+                    // 因为不是求总最低消耗，而是判断当前消耗是否满足不超过mid，所以可以用这种方式
+                    // 说白了此题不需要考虑过去的值，而地下城那题需考虑过去的值
                     if (x >= 0 && x < rows && y >= 0 && y < cols && !seen[x * cols + y] && Math.abs(heights[x][y] - heights[curr[0]][curr[1]]) <= mid) {
                         queue.offer(new int[]{x, y});
                         seen[x * cols + y] = true;
