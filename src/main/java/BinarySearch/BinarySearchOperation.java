@@ -229,4 +229,23 @@ public class BinarySearchOperation {
         // 当 left==right 的时候，表示此值就是极大值
         return left;
     }
+
+    /**
+     * h指数
+     * 求左边界啦
+     */
+    public int hIndex(int[] citations) {
+        int left = 0;
+        int right = citations.length - 1;
+        int len = citations.length;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            // 求满足h指数条件的h最大化
+            if (citations[mid] >= len - mid) right = mid - 1;
+            else left = mid + 1;
+        }
+        return len - left;
+    }
+
 }
