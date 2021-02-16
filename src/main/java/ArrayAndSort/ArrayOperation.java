@@ -1,5 +1,6 @@
 package ArrayAndSort;
 
+import com.sun.corba.se.impl.oa.poa.AOMEntry;
 import org.junit.Test;
 import org.omg.CORBA.INTERNAL;
 
@@ -166,10 +167,48 @@ public class ArrayOperation {
                 if (j == 0 || j == i)
                     currRow.add(1);
                 else
-                    currRow.add(results.get(i - 1).get(j - 1) + results.get(i -1 ).get(j));
+                    currRow.add(results.get(i - 1).get(j - 1) + results.get(i - 1).get(j));
             }
             results.add(currRow);
         }
         return results;
+    }
+
+    // 剪绳子
+    public int cuttingRope(int n) {
+        if (n <= 3) return n - 1;
+        int a = n / 3;
+        int b = n % 3;
+        if (b == 0) return (int) Math.pow(3, a);
+        else if (b == 1) return (int) Math.pow(3, a - 1) * 4;
+        else return (int) Math.pow(3, a) * 2;
+    }
+
+    /**
+     * 最小路径
+     */
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+        dp[0][1] = 0;
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1];
+            }
+        }
+
+        return dp[m][n];
+    }
+
+    @Test
+    public void test3() {
+        ArrayOperation a = new ArrayOperation();
+        System.out.println(a.minPathSum(new int[][]{{1,2},{1,1}}));
     }
 }

@@ -1,5 +1,8 @@
 package DP;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class StringOperation {
 
     /**
@@ -40,6 +43,7 @@ public class StringOperation {
         return ans;
     }
 
+
     /**
      * 最长公共子序列
      */
@@ -65,4 +69,37 @@ public class StringOperation {
     private int min(int a, int b, int c) {
         return Math.min(a, Math.min(b, c));
     }
+
+
+    /**
+     * 最长有效括号
+     */
+    public int longestValidParentheses(String s) {
+        int len = s.length();
+        if (len <= 1) return 0;
+        // 以s[i]结尾
+        int[] dp = new int[len];
+        int max = 0;
+
+        for (int i = 1; i < len; i++) {
+            if (s.charAt(i) == ')') {
+                if (s.charAt(i - 1) == '(') {
+                    int temp = i - 2 >= 0 ? dp[i - 2] : 0;
+                    dp[i] = 2 + temp;
+                } else if (dp[i - 1] > 0) {
+                    int temp = i - 1 - dp[i - 1];
+                    if (temp >= 0 && s.charAt(temp) == '(')
+                        // s[temp]前面相连有效子串 也要加上去
+                        dp[i] = dp[i - 1] + 2 + (temp > 0 ? dp[temp - 1] : 0);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+
+        return max;
+    }
+
+
+
+
 }
