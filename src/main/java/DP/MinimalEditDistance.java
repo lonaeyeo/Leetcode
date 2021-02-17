@@ -4,6 +4,7 @@ public class MinimalEditDistance {
 
     /**
      * 最短编辑距离
+     * s1和s2，将s2变成s1的最短编辑距离
      * <p>
      * base case：其中一个字符串为空，那么最短编辑距离就是另一个字符串的长度
      */
