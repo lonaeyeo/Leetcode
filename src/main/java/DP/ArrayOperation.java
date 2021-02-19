@@ -85,4 +85,58 @@ public class ArrayOperation {
         return ans;
     }
 
+
+    /**
+     * 零钱兑换
+     */
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        // 初始化为amount+1是因为所需硬币数可能为amount
+        // 不能置Max，因为会溢出
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++) {
+            for (int j = coins.length - 1; j >= 0; j--) {
+                if (i - coins[j] < 0)
+                    continue;
+                // 如果dp[i-coins[j]]=amount+1的话，不会影响结果
+                dp[i] = Math.min(dp[i - coins[j]] + 1, dp[i]);
+            }
+        }
+
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+
+
+    /**
+     * 礼物最大化，相当于最大路径
+     */
+    public int maxValue(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]) + grid[i - 1][j - 1];
+            }
+        }
+
+        return dp[m][n];
+    }
+
+    /**
+     * 不同路径
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m + 1][n + 1];
+        dp[0][1] = 1;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
+            }
+        }
+        return dp[m][n];
+    }
 }
