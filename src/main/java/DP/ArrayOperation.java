@@ -2,6 +2,7 @@ package DP;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 public class ArrayOperation {
 
@@ -138,5 +139,57 @@ public class ArrayOperation {
             }
         }
         return dp[m][n];
+    }
+
+
+    /**
+     * 三角形中最短路径
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[][] dp = new int[n][n];
+
+        dp[0][0] = triangle.get(0).get(0);
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = dp[i - 1][0] + triangle.get(i).get(0);
+            for (int j = 1; j < i; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j]) + triangle.get(i).get(j);
+            }
+            dp[i][i] = dp[i - 1][i - 1] + triangle.get(i).get(i);
+        }
+
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            res = Math.min(res, dp[n - 1][i]);
+        }
+
+        return res;
+    }
+
+    // 压缩空间版本
+    public int minimumTotal2(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[] dp = new int[n];
+
+        dp[0] = triangle.get(0).get(0);
+        for (int i = 1; i < n; i++) {
+            // 表示左上的数值
+            int upLeft = dp[0];
+            int up = 0;
+            dp[0] = dp[0] + triangle.get(i).get(0);
+            for (int j = 1; j < i; j++) {
+                up = dp[j];
+                dp[j] = Math.min(upLeft, dp[j]) + triangle.get(i).get(j);
+                upLeft = up;
+            }
+            dp[i] = upLeft + triangle.get(i).get(i);
+        }
+
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            res = Math.min(res, dp[i]);
+        }
+
+        return res;
     }
 }
