@@ -1,5 +1,7 @@
 package DP;
 
+import org.junit.Test;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
@@ -228,6 +230,62 @@ public class ArrayOperation {
             res = Math.max(res, dp);
         }
         return res;
+    }
+
+
+    /**
+     * 拆分整数
+     */
+    public int integerBreak(int n) {
+        int[] dp = new int[n + 1];
+        // 2起步
+        dp[0] = 0;
+        dp[1] = 0;
+
+        for (int i = 2; i <= n; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                // 二分或者，多分
+                max = Math.max(max, Math.max(j * (i - j), j * dp[i - j]));
+            }
+            dp[i] = max;
+        }
+
+        return dp[n];
+    }
+
+
+    /**
+     * 回文子串
+     * 看s中有多少个子串
+     * dp：以[i][j]的子串是否为回文子串
+     */
+    public int countSubstrings(String s) {
+        int len = s.length();
+        boolean[][] dp = new boolean[len][len];
+
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j <= i; j++) {
+                dp[i][j] = true;
+            }
+        }
+
+        int res = 0;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i + 1; j < len; j++) {
+                dp[i][j] = dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j);
+                res = dp[i][j] ? res + 1 : res;
+            }
+        }
+
+        return res + len;
+    }
+
+
+    @Test
+    public void test() {
+        ArrayOperation a = new ArrayOperation();
+        System.out.println(a.countSubstrings("aaaaa"));
     }
 
 }
