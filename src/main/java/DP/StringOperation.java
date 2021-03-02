@@ -1,7 +1,6 @@
 package DP;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class StringOperation {
 
@@ -100,6 +99,69 @@ public class StringOperation {
     }
 
 
+    /**
+     * 最大正方形
+     */
+    public int maximalSquare(char[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        // 以[i][j]为右小角的最大正方形
+        int[][] dp = new int[m][n];
 
+        //
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == '1')
+                dp[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            if (matrix[0][i] == '1')
+                dp[0][i] = 1;
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == '1')
+                    dp[i][j] = getMin(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
+            }
+        }
+
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                res = Math.max(res, dp[i][j]);
+            }
+        }
+
+        return res * res;
+    }
+
+    private int getMin(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
+    }
+
+
+    /**
+     * 单词划分，完整划分
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 如果出现多个字符串匹配的情况，应该考虑使用HashSet
+        Set<String> wordDictSet = new HashSet<>(wordDict);
+        // 以[i]结尾是否可划分，[0]预留
+        boolean[] dp = new boolean[s.length() + 1];
+        // dp中0表示无j划分的情况
+        dp[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            // 将[j]作为分割点，判断[j+1, i]是否是个词
+            for (int j = 0; j < i; j++) {
+                // 注意在set中下标应该-1
+                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
 
 }
