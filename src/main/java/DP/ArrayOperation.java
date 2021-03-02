@@ -192,4 +192,42 @@ public class ArrayOperation {
 
         return res;
     }
+
+
+    /**
+     * 乘积最大子数组
+     */
+    public int maxProduct(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        if (len == 1) return nums[0];
+        // 以[i]结尾的最大正数和
+        int[] dpP = new int[len];
+        // 最小负数（最小负数乘以另一个负数 得到 最大整数）
+        int[] dpN = new int[len];
+        if (nums[0] > 0) {
+            dpP[0] = nums[0];
+            dpN[0] = 0;
+        } else {
+            dpP[0] = 0;
+            dpN[0] = nums[0];
+        }
+
+        for (int i = 1; i < len; i++) {
+            if (nums[i] > 0) {
+                dpP[i] = dpP[i - 1] == 0 ? nums[i] : dpP[i - 1] * nums[i];
+                dpN[i] = nums[i] * dpN[i - 1];
+            } else {
+                dpP[i] = nums[i] * dpN[i - 1];
+                dpN[i] = dpP[i - 1] == 0 ? nums[i] : dpP[i - 1] * nums[i];
+            }
+        }
+
+        int res = 0;
+        for (int dp : dpP) {
+            res = Math.max(res, dp);
+        }
+        return res;
+    }
+
 }
