@@ -78,10 +78,30 @@ public class StockTrading {
         return sell[prices.length - 1][k];
     }
 
+
+    /**
+     * 不限次数，但有手续费
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int len = prices.length;
+        if (len == 1) return 0;
+        // sell表示截至i日手上无持有的最大营收，buy表示截至i日手上持有一个股票的最大营收
+        int sell = 0;
+        int buy = -prices[0];
+
+        for (int i = 1; i < len; i++) {
+            int sell1 = Math.max(sell, buy + prices[i] - fee);
+            int buy1 = Math.max(buy, sell - prices[i]);
+            sell = sell1;
+            buy = buy1;
+        }
+        return sell;
+    }
+
     @Test
     public void test() {
         StockTrading s = new StockTrading();
-        System.out.println(s.maxProfit(2, new int[]{2, 4, 1}));
+        System.out.println(s.maxProfit(new int[]{1, 3, 2, 8, 4, 9}, 2));
     }
 
 }
