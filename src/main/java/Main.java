@@ -6,16 +6,69 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        char[][] matrix = new char[][]{
-                {'1', '0', '1', '1', '1'},
-                {'0', '1', '0', '1', '0'},
-                {'1', '1', '0', '1', '1'},
-                {'1', '1', '0', '1', '1'},
-                {'0', '1', '1', '1', '1'}};
-        System.out.println(Main.maximalRectangle(matrix));
-        int[] heights = new int[]{1,9,3,8,5};
-        System.out.println(Main.largestRectangleArea(heights));
-        System.out.println(-Double.MAX_VALUE);
+//        for (int i = 1; i <= 200; i++) {
+//            if ((i - 1) % 20 == 0)
+//                System.out.println();
+//            System.out.print(",b" + i);
+//        }
+//        for (int i = 1; i <= 50; i++) {
+//            if ((i - 1) % 5 == 0)
+//                System.out.println();
+//            System.out.print(",x" + i);
+//        }
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("inner-outer(x" + (1 + i * 5) + ", x" + (2 + i * 5) + ");");
+            System.out.println("inner-outer(x" + (5 + i * 5) + ", x" + (4 + i * 5) + ");");
+            System.out.println("outer-inner(x" + (2 + i * 5) + ", x" + (1 + i * 5) + ");");
+            System.out.println("outer-inner(x" + (4 + i * 5) + ", x" + (5 + i * 5) + ");");
+            System.out.println();
+        }
+
+
+    }
+
+    @Test
+    public void testbin() {
+        int bn = 1;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 1; j <= 5; j++) {
+                if (j == 3) continue;
+                System.out.println("        binAt(b" + (bn++) + ", l" + (1 + i) + ", x" + j + ", y2, z0);");
+                System.out.println("        binAt(b" + (bn++) + ", l" + (1 + i) + ", x" + j + ", y3, z0);");
+                System.out.println("        binAt(b" + (bn++) + ", l" + (1 + i) + ", x" + j + ", y4, z0);");
+                System.out.println("        binAt(b" + (bn++) + ", l" + (1 + i) + ", x" + j + ", y5, z0);");
+                System.out.println("        binAt(b" + (bn++) + ", l" + (1 + i) + ", x" + j + ", y6, z0);");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testaisle() {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 7; j++) {
+                System.out.println("        aisleAt(l" + i + ", x" + (3 + 5 * (i - 1)) + ", y" + j + ");");
+            }
+        }
+    }
+
+    @Test
+    public void testStacker() {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println("        stacker(s" + i + ", l" + i + ");");
+        }
+    }
+
+    @Test
+    public void testAdjecent() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("        adjacent(x" + (3 + i * 5) + ", x" + (5 + i * 5) + ");");
+            System.out.println("        adjacent(x" + (5 + i * 5) + ", x" + (3 + i * 5) + ");");
+            System.out.println("        inboundBase(x" + (5 + i * 5) + ", y" + (1 + i * 5) + ");");
+            System.out.println("        outboundBase(x" + (5 + i * 5) + ", y" + (7 + i * 5) + ");");
+            System.out.println();
+        }
     }
 
     @Test
@@ -30,6 +83,23 @@ public class Main {
         c.left = d;
         c.right = e;
         System.out.println(a.isValidBST(a));
+    }
+
+    @Test
+    public void stackerAt() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("        stackerAt(s" + (1 + i) + ", x" + (5 + i * 5) + ", y1);");
+        }
+    }
+
+    @Test
+    public void itemAt() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("        itemAt(x" + (1 + i * 5) + ", y3, z0);");
+            System.out.println("        itemAt(x" + (2 + i * 5) + ", y4, z0);");
+            System.out.println("        itemAt(x" + (4 + i * 5) + ", y5, z0);");
+            System.out.println("        outboundItemAt(x" + (2 + i * 5) + ", y4, z0);");
+        }
     }
 
 
