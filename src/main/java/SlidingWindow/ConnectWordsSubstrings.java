@@ -46,11 +46,11 @@ public class ConnectWordsSubstrings {
             while (right + wordLen <= s.length()) {
                 // 从s中获取一个词语
                 String rS = s.substring(right, right + wordLen);
-                currMap.put(rS, currMap.getOrDefault(rS, 0) + 1);
-                count++;
                 right += wordLen;
 
                 if (wordMap.containsKey(rS)) {
+                    currMap.put(rS, currMap.getOrDefault(rS, 0) + 1);
+                    count++;
                     // 如果超量，得删除一些，可能会将原有OK的删除掉
                     // 所以总能窗口确保小于wordsLen
                     while (currMap.get(rS) > wordMap.get(rS)) {
@@ -70,13 +70,11 @@ public class ConnectWordsSubstrings {
                     currMap.clear();
                     left = right;
                 }
-
                 // while循环中，即可判断是否存在，因为可能满足条件的会有多串
                 // 所以需多次比较大小
                 if (count == words.length)
                     res.add(left);
             }
-
             // 每次for都要清算
             count = 0;
             currMap.clear();
