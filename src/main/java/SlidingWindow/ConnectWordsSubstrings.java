@@ -33,6 +33,7 @@ public class ConnectWordsSubstrings {
         for (int i = 0; i < words.length; i++) {
             wordMap.put(words[i], wordMap.getOrDefault(words[i], 0) + 1);
         }
+        System.out.println(wordMap);
 
         // 探测时map，以及计数词count
         HashMap<String, Integer> currMap = new HashMap<>();
