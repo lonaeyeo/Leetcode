@@ -9,6 +9,10 @@ import java.util.Set;
 
 public class FrogCrossRiver {
 
+    /**
+     * 青蛙过河，[0,1,2,5,6,8,10,11]
+     * 假设当前跳跃步是K，那么下一条约就是K-1, K, K+1
+     */
     public boolean canCross(int[] stones) {
         int n = stones.length;
         Map<Integer, Set<Integer>> dp = new HashMap<>();
