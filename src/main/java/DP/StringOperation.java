@@ -1,5 +1,7 @@
 package DP;
 
+import org.junit.Test;
+
 import java.util.*;
 
 public class StringOperation {
@@ -164,4 +166,54 @@ public class StringOperation {
         return dp[s.length()];
     }
 
+
+    /**
+     * 分割回文串
+     */
+    boolean[][] dp;
+    List<List<String>> lists = new ArrayList<>();
+    List<String> ans = new ArrayList<>();
+
+    public List<List<String>> partition(String s) {
+        int len = s.length();
+        dp = new boolean[len][len];
+
+        // dp记录[i, j]是否为回文串
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i; j < len; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    // 如果i+1>j-1，temp应该置为true
+                    boolean temp = i + 1 <= j - 1 ? dp[i + 1][j - 1] : true;
+                    dp[i][j] = temp;
+                }
+            }
+        }
+
+        dfs(s, 0);
+        return lists;
+    }
+
+    public void dfs(String s, int i) {
+        if (i == s.length()) {
+            // 此种实例化方法，会把ans的内容复制一遍
+            lists.add(new ArrayList<String>(ans));
+            return;
+        }
+
+        for (int j = i; j < s.length(); j++) {
+            if (dp[i][j]) {
+                ans.add(s.substring(i, j + 1));
+                // 如果[i, j]是回文串，那就看[j+1, len]可以划分成什么样的回文串
+                dfs(s, j + 1);
+                // 向上回溯时，应删除 旧的解
+                ans.remove(ans.size() - 1);
+            }
+        }
+    }
+
+    @Test
+    public  void test(){
+        StringOperation s = new StringOperation();
+        System.out.println(s.partition("aab"));
+    }
 }
