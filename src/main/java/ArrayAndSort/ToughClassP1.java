@@ -113,6 +113,7 @@ public class ToughClassP1 {
 
     /**
      * 缺失的第一个正数
+     * tip：这个数最大也就只可能是N+1，所以该数的范围为[1, N+1]
      */
     public int firstMissingPositive(int[] nums) {
         int max = nums.length + 1;
