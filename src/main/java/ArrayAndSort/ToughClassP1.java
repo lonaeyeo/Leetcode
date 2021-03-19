@@ -111,4 +111,33 @@ public class ToughClassP1 {
         return ans;
     }
 
+    /**
+     * 缺失的第一个正数
+     */
+    public int firstMissingPositive(int[] nums) {
+        int max = nums.length + 1;
+        // 将数组中小于等于0的数全部改成N+1
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] <= 0)
+                nums[i] = max;
+        }
+        // 用负号标记，最后扫描不是负数的就可以了
+        for (int i = 0; i < nums.length; i++) {
+            int temp = Math.abs(nums[i]);
+            if (temp <= nums.length) {
+                // 标记负号
+                if (nums[temp - 1] > 0) {
+                    nums[temp - 1] = -nums[temp - 1];
+                }
+            }
+        }
+
+        // 找到非负数的位置，即是最小未出现的正数
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0)
+                return i + 1;
+        }
+
+        return nums.length + 1;
+    }
 }
