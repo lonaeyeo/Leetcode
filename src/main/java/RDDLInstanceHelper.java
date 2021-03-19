@@ -1,4 +1,3 @@
-import BinaryTree.TreeNode;
 import org.junit.Test;
 
 public class RDDLInstanceHelper {

@@ -1,4 +1,4 @@
-package BinaryTree;
+package BinaryTreeAndNode;
 
 
 import java.util.*;

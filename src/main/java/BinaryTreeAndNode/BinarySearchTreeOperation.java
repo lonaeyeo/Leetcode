@@ -1,6 +1,5 @@
-package BinaryTree;
+package BinaryTreeAndNode;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 public class BinarySearchTreeOperation {
