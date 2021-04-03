@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ArrayOperation {
@@ -305,6 +306,55 @@ public class ArrayOperation {
         return dp[n - 1];
     }
 
+    /**
+     * 无重复区间
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0) return 0;
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[1];
+            }
+        });
+
+        // 以intervals[i]结尾的最大无重复区间数
+        int[] dp = new int[intervals.length];
+        Arrays.fill(dp, 1);
+        int res = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (intervals[j][1] <= intervals[i][0]) {
+                    // dp[j]都是从dp[j-1]上来的
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    // 贪心
+    public int eraseOverlapIntervals1(int[][] intervals) {
+        if (intervals.length == 0) return 0;
+
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+
+        int res = 1;
+        int right = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            if (right <= intervals[i][0]) {
+                res++;
+                right = intervals[i][1];
+            }
+        }
+        return intervals.length - res;
+    }
 
     @Test
     public void test() {
