@@ -338,6 +338,7 @@ public class ArrayOperation {
     public int eraseOverlapIntervals1(int[][] intervals) {
         if (intervals.length == 0) return 0;
 
+        // 按[, 1][, 2][, 3]排序
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
@@ -347,6 +348,8 @@ public class ArrayOperation {
 
         int res = 1;
         int right = intervals[0][1];
+
+        // 只需比较 右界和 新的左界 做对比
         for (int i = 1; i < intervals.length; i++) {
             if (right <= intervals[i][0]) {
                 res++;
