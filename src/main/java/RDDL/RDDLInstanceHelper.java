@@ -1,3 +1,5 @@
+package RDDL;
+
 import org.junit.Test;
 
 public class RDDLInstanceHelper {

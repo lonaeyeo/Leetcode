@@ -1,6 +1,4 @@
-package Test;
-
-import org.junit.Test;
+package Ceshi;
 
 public class Kuaipai {
 
@@ -32,6 +30,7 @@ public class Kuaipai {
             nums[right] = nums[left];
             // System.out.println("------------");
         }
+        // 记住这里也要
         nums[left] = key;
 
         quickSort(nums, l, left - 1);
