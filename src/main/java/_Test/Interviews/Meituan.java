@@ -1,4 +1,4 @@
-package Ceshi;
+package _Test.Interviews;
 
 import org.junit.Test;
 

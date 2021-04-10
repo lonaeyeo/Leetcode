@@ -1,4 +1,4 @@
-package Ceshi;
+package _Test.Interviews;
 
 import org.junit.Test;
 
@@ -13,8 +13,14 @@ public class Son extends Father {
 
     }
 
+
     public void myPrint() {
         System.out.println();
+    }
+
+    @Override
+    void fDo2() {
+        System.out.println("abstract father fDo2 implementation");
     }
 
     static void do1() {
@@ -28,14 +34,15 @@ public class Son extends Father {
             System.out.print(str + " ");
         }
         //
-//        Son son = new Son();
-//        son.myPrint();
-//        System.out.println(son.list.size());
-//        son.list.add(1);
-//        System.out.println(son.list.size());
-//        System.out.println(Math.round(-1.5));
-//        double a = -1.5;
-//        System.out.println((int) a / 1);
+        Son son = new Son();
+        son.myPrint();
+        son.fDo1();
+        System.out.println(son.list.size());
+        son.list.add(1);
+        System.out.println(son.list.size());
+        System.out.println(Math.round(-1.5));
+        double a = -1.5;
+        System.out.println((int) a / 1);
     }
 
 
@@ -47,6 +54,7 @@ public class Son extends Father {
         System.out.println(sb);
         String str = "love";
         System.out.println(str.replace('o', '0'));
+        System.out.println(str.toUpperCase());
     }
 
     //

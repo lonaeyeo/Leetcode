@@ -1,9 +1,9 @@
-package Ceshi;
+package _Test.Interviews;
 
-public class Kuaipai {
+public class QuickSort {
 
     public static void main(String[] args) {
-        Kuaipai k = new Kuaipai();
+        QuickSort k = new QuickSort();
         int[] A = new int[]{4, 6, 77, 3, 324, 43, 43, 2, 54, 23, 15, 36, 77, 88, 109, 1198, 2378, 7, 1};
         k.quickSort(A, 0, A.length - 1);
         for (int a : A) {

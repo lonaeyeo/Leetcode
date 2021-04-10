@@ -42,22 +42,22 @@ public class Main {
 //            System.out.print(a+b);
 //            System.out.println(" -");
 //        }
-//        String str;
-//        str = s.nextLine();
-//        str = s.next();
-//        System.out.println(str);
-//        String path = new File("abs").getAbsolutePath();
-//        try {
-//            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path + "test.txt")));
-//            for (int i = 0; i < 10; i++) {
-//                String temp = s.nextLine();
-//                bw.write(temp);
-//                bw.flush();
-//            }
-//            bw.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        String str;
+        str = s.nextLine();
+        str = s.next();
+        System.out.println(str);
+        String path = new File("abs").getAbsolutePath();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path + "test.txt")));
+            for (int i = 0; i < 10; i++) {
+                String temp = s.nextLine();
+                bw.write(temp);
+                bw.flush();
+            }
+            bw.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
