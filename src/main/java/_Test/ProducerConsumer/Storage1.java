@@ -16,25 +16,25 @@ public class Storage1 implements AbstractStorage {
     public void produce(int num) {
         //同步
         synchronized (list) {
-            //仓库剩余的容量不足以存放即将要生产的数量，暂停生产
+            // 仓库剩余的容量不足以存放即将要生产的数量，暂停生产
+            // num生产数量
             while (list.size() + num > MAX_SIZE) {
                 System.out.println("【要生产的产品数量】:" + num + "\t【库存量】:"
                         + list.size() + "\t暂时不能执行生产任务!");
-
                 try {
                     //条件不满足，生产阻塞
+                    // !!!释放锁
                     list.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
             for (int i = 0; i < num; i++) {
                 list.add(new Object());
             }
-
             System.out.println("【已经生产产品数】:" + num + "\t【现仓储量为】:" + list.size());
 
+            // 使用仓库结束，唤醒其他线程
             list.notifyAll();
         }
     }
@@ -42,26 +42,24 @@ public class Storage1 implements AbstractStorage {
     //消费产品
     public void consume(int num) {
         synchronized (list) {
-
             //不满足消费条件
             while (num > list.size()) {
                 System.out.println("【要消费的产品数量】:" + num + "\t【库存量】:"
                         + list.size() + "\t暂时不能执行生产任务!");
-
                 try {
+                    // !!!不满足条件，释放锁
                     list.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
             //消费条件满足，开始消费
             for (int i = 0; i < num; i++) {
                 list.remove();
             }
-
             System.out.println("【已经消费产品数】:" + num + "\t【现仓储量为】:" + list.size());
 
+            // 完成使用，唤醒其他线程
             list.notifyAll();
         }
     }
