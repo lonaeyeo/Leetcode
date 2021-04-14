@@ -209,9 +209,10 @@ public class ArrayOperation {
     @Test
     public void test3() {
         System.out.println(178 & 1);
+        System.out.println(-1 >>> 1);
         ArrayOperation a = new ArrayOperation();
 //        System.out.println(a.minPathSum(new int[][]{{1, 2}, {1, 1}}));
-        int b = 0;
+        int b = -1;
         System.out.println(Integer.toBinaryString(b));
         System.out.println(a.reverseBits(b));
     }
@@ -221,23 +222,30 @@ public class ArrayOperation {
      * num中1111最大
      */
     public int reverseBits(int num) {
+        int n = num;
+        if (n == 0) return 1;
+        if (n == -1) return 32;
+
         int curr = 0;
-        int max = 0;
+        int res = 0;
         int pre = 0;
-        for (int i = 0; i < 32; i++) {
-            if ((num & 1) == 1) {
+
+        while (n != 0) {
+            if ((n & 1) == 1) {
                 curr++;
             } else {
                 // 从一个方向开始，只需考虑前面一个0
                 // pre可能是一个0以前的连续1串，也可能是不是
-                max = Math.max(max, curr + pre + 1);
+                res = Math.max(res, curr + pre + 1);
                 // 第一次遇0时，pre>0，再次遇0时，pre=0
                 pre = curr;
                 curr = 0;
             }
-            num = num >> 1;
+            // ">>"有符号右移，">>>"无符号右移
+            n = n >>> 1;
         }
-        return max;
+        res = Math.max(res, curr + pre + 1);
+        return res;
     }
 
 
