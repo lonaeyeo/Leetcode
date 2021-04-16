@@ -177,7 +177,9 @@ public class BinaryTreeOperation {
         return results;
     }
 
-    // 中序和前序
+    /**
+     * 根据前序和中序
+     */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         inorderMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
@@ -187,7 +189,6 @@ public class BinaryTreeOperation {
         return myBuildTree(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
     }
 
-    private Map<Integer, Integer> inorderMap;
 
     public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
         if (preorderLeft > preorderRight)
@@ -205,10 +206,36 @@ public class BinaryTreeOperation {
         return root;
     }
 
+    // 第二种尝试
+    private Map<Integer, Integer> inorderMap;
+
+    public TreeNode buildTreepi(int[] preorder, int[] inorder) {
+        inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTreeHelper(preorder, inorder, 0, 0, inorder.length - 1);
+    }
+
+    private TreeNode buildTreeHelper(int[] preorder, int[] inorder, int index, int il, int ir) {
+        if (index > inorder.length - 1)
+            return null;
+        if (il > ir)
+            return null;
+        int iroot = inorderMap.get(preorder[index]);
+        System.out.println(index);
+        TreeNode root = new TreeNode(preorder[index]);
+
+        root.left = buildTreeHelper(preorder, inorder, index + 1, il, iroot - 1);
+        root.right = buildTreeHelper(preorder, inorder, index + iroot - il + 1, iroot + 1, ir);
+
+        return root;
+    }
+
     @Test
     public void testBuildTree1() {
         BinaryTreeOperation binaryTreeOperation = new BinaryTreeOperation();
-        binaryTreeOperation.buildTree1(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
+        binaryTreeOperation.buildTreepi(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
     }
 
     // 中序和后序

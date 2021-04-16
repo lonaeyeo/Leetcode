@@ -249,4 +249,63 @@ public class ArrayOperation {
     }
 
 
+    /**
+     * 最小K个数
+     * 大顶堆的方法
+     * 时间复杂度：O(nlogk)，其中 n 是数组 arr 的长度。由于大根堆实时维护前 k 小值，
+     * 所以插入删除都是 O(logk) 的时间复杂度，最坏情况下数组里 n 个数都会插入，因此一共需要 O(nlogk) 的时间复杂度。
+     *
+     * 空间复杂度：O(k)，因为大根堆里最多 k 个数。
+     */
+    public int[] getLeastNumbers(int[] arr, int k) {
+        int[] res = new int[k];
+
+        if (k < 1)
+            return res;
+        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+            // 堆顶数最大
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+
+        for (int i = 0; i < k; i++) {
+            queue.offer(arr[i]);
+        }
+        for (int i = k; i < arr.length; i++) {
+            if (arr[i] < queue.peek()) {
+                queue.poll();
+                queue.offer(arr[i]);
+            }
+        }
+
+        for (int i = 0; i < k; i++) {
+            res[i] = queue.poll();
+        }
+        return res;
+    }
+
+    @Test
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        String[] strs = sc.nextLine().split(" ");
+        int[] nums = new int[strs.length];
+        for (int i = 0; i < strs.length; i++) {
+            nums[i] = Integer.parseInt(strs[i]);
+        }
+        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        for (int i = 0; i < nums.length; i++) {
+            queue.offer(nums[i]);
+        }
+        while (!queue.isEmpty()) {
+            System.out.println(queue.poll());
+        }
+    }
 }
