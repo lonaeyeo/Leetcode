@@ -254,7 +254,7 @@ public class ArrayOperation {
      * 大顶堆的方法
      * 时间复杂度：O(nlogk)，其中 n 是数组 arr 的长度。由于大根堆实时维护前 k 小值，
      * 所以插入删除都是 O(logk) 的时间复杂度，最坏情况下数组里 n 个数都会插入，因此一共需要 O(nlogk) 的时间复杂度。
-     *
+     * <p>
      * 空间复杂度：O(k)，因为大根堆里最多 k 个数。
      */
     public int[] getLeastNumbers(int[] arr, int k) {
@@ -306,6 +306,57 @@ public class ArrayOperation {
         }
         while (!queue.isEmpty()) {
             System.out.println(queue.poll());
+        }
+    }
+
+    /**
+     * 颜色分类，此处是三类0，1，2
+     * 方法一：单指针
+     */
+    public void sortColors(int[] nums) {
+        int pointer = 0;
+        for (int i = 0; i < nums.length; i++) {
+            // 先分类0
+            if (nums[i] == 0) {
+                int temp = nums[pointer];
+                nums[pointer] = nums[i];
+                nums[i] = temp;
+                pointer++;
+            }
+        }
+
+        // 再分类1
+        for (int i = pointer; i < nums.length; i++) {
+            if (nums[i] == 1) {
+                int temp = nums[pointer];
+                nums[pointer] = nums[i];
+                nums[i] = temp;
+                pointer++;
+            }
+        }
+    }
+
+    // 方法二：双指针
+    public void sortColors1(int[] nums) {
+        int zero = 0;
+        int index = 0;
+        int two = nums.length - 1;
+
+        while (index <= two) {
+            if (nums[index] == 0) {
+                int temp = nums[zero];
+                nums[zero] = nums[index];
+                nums[index] = temp;
+                zero++;
+                index++;
+            } else if (nums[index] == 1) {
+                index++;
+            } else {
+                int temp = nums[two];
+                nums[two] = nums[index];
+                nums[index] = temp;
+                two--;
+            }
         }
     }
 }

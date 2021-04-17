@@ -15,22 +15,27 @@ public class Calculator {
     public static void main(String[] args) {
         // 10000+99/9-100*100
         Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        str = str + ".";
+        String s = sc.nextLine();
+        Calculator c = new Calculator();
+        System.out.println(c.calculate(s));
+    }
+
+    public int calculate2(String s) {
+        s = s + ".";
         Deque<Integer> nums = new LinkedList<>();
         Deque<Character> ops = new LinkedList<>();
 
         int index = 0;
-        while (str.length() > index) {
-            if (Character.isDigit(str.charAt(index))) {
+        while (s.length() > index) {
+            if (Character.isDigit(s.charAt(index))) {
                 // 判断是否为数字
                 int temp = 0;
-                while (str.length() > index && Character.isDigit(str.charAt(index))) {
-                    temp = temp * 10 + Integer.parseInt(str.substring(index, index + 1));
+                while (s.length() > index && Character.isDigit(s.charAt(index))) {
+                    temp = temp * 10 + s.charAt(index) - '0';
                     index++;
                 }
                 nums.push(temp);
-            } else if (!ops.isEmpty() && isPrior(ops.peek(), str.charAt(index))) {
+            } else if (!ops.isEmpty() && isPrior(ops.peek(), s.charAt(index))) {
                 // 判断str当前操作符优先级是否低于ops.peek()
                 // 重点：此处没有任何push操作
                 char op = ops.pop();
@@ -40,19 +45,20 @@ public class Calculator {
                 compute(op, a1, a2, nums);
             } else {
                 // 如果ops是空||str优先级高的话，直接push操作符
-                if (str.charAt(index) == '.') {
+                if (s.charAt(index) == '.') {
                     break;
                 } else {
-                    ops.push(str.charAt(index));
+                    ops.push(s.charAt(index));
                     index++;
                 }
             }
         }
-        System.out.println(nums.peek());
+        //System.out.println(nums.peek());
+        return nums.peek();
     }
 
     // 判断优先级，优先级'*/' > '-' > '+' > '.'
-    public static boolean isPrior(char a, char b) {
+    public boolean isPrior(char a, char b) {
         if (a == '/' || a == '*') {
             return true;
         } else if (b == '/' || b == '*') {
@@ -68,7 +74,7 @@ public class Calculator {
     }
 
     // 基本计算
-    public static void compute(char op, int a1, int a2, Deque<Integer> nums) {
+    public void compute(char op, int a1, int a2, Deque<Integer> nums) {
         if (op == '*') {
             nums.push(a2 * a1);
         } else if (op == '/') {
@@ -89,6 +95,54 @@ public class Calculator {
             System.out.print(num + " ");
         }
         System.out.println();
+    }
+
+
+    /**
+     * 方法二：单栈
+     * 先计算乘除，减法则负值，加法不处理
+     * preSign 标记当前数前一个运算符
+     * 剩余栈直接加法就🆗
+     */
+    public int calculate(String s) {
+        // 初试化preSign
+        char preSign = '+';
+        Deque<Integer> stack = new LinkedList<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            // 处理空格
+            if (s.charAt(i) == ' ') {
+                continue;
+            } else if (Character.isDigit(s.charAt(i))) {
+                int num = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i) - '0';
+                    i++;
+                }
+                // 抵消i+1效果
+                i--;
+                // 根据preSign处理当前num
+                if (preSign == '*') {
+                    stack.push(stack.pop() * num);
+                } else if (preSign == '/') {
+                    stack.push(stack.pop() / num);
+                } else if (preSign == '-') {
+                    stack.push(-num);
+                } else {
+                    stack.push(num);
+                }
+
+            } else {
+                preSign = s.charAt(i);
+            }
+        }
+
+        // 加法处理剩余所有nums
+        int res = 0;
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
     }
 
 }
