@@ -286,7 +286,6 @@ public class ArrayOperation {
         return res;
     }
 
-    @Test
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -301,6 +300,7 @@ public class ArrayOperation {
                 return o2 - o1;
             }
         });
+
         for (int i = 0; i < nums.length; i++) {
             queue.offer(nums[i]);
         }
@@ -358,5 +358,54 @@ public class ArrayOperation {
                 two--;
             }
         }
+    }
+
+
+    /**
+     * 264. 丑数
+     * 小顶堆
+     */
+    public int nthUglyNumber(int n) {
+        int[] factors = new int[]{2, 3, 5};
+        Set<Long> seen = new HashSet<>();
+        PriorityQueue<Long> queue = new PriorityQueue<>();
+        seen.add(1L);
+        queue.offer(1L);
+
+        long ugly = 0;
+
+        for (int i = 0; i < n; i++) {
+            ugly = queue.poll();
+            for (int j = 0; j < factors.length; j++) {
+                Long temp = ugly * factors[j];
+                if (seen.add(temp)) {
+                    queue.offer(temp);
+                }
+            }
+        }
+
+        return Math.toIntExact(ugly);
+    }
+
+    // dp
+    public int nthUglyNumber2(int n) {
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        int a = 1, b = 1, c = 1;
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = Math.min(Math.min(dp[a] * 2, dp[b] * 3), dp[c] * 5);
+            // 重复都会被剔除掉
+            if (dp[i] == dp[a] * 2) a++;
+            if (dp[i] == dp[b] * 3) b++;
+            if (dp[i] == dp[c] * 5)c++;
+        }
+        return dp[n];
+    }
+
+    @Test
+    public void test4() {
+        ArrayOperation a = new ArrayOperation();
+        System.out.println(a.nthUglyNumber2(10));
     }
 }
