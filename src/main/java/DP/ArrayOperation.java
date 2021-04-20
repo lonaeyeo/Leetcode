@@ -1,11 +1,10 @@
 package DP;
 
 import org.junit.Test;
+import sun.awt.image.ImageWatched;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ArrayOperation {
 
@@ -359,10 +358,40 @@ public class ArrayOperation {
         return intervals.length - res;
     }
 
+
+    /**
+     * 剑指 Offer 46. 把数字翻译成字符串
+     * [0,...,25] --> [a,...,z]
+     */
+    public int translateNum(int num) {
+        if (num < 10)
+            return 1;
+        // 转换成String串来处理，就不需要新建一个list
+        String str = new Integer(num).toString();
+        int[] dp = new int[str.length()];
+        dp[0] = 1;
+        if ((str.charAt(0) - '0') * 10 + (str.charAt(1) - '0') < 26) dp[1] = dp[0] + 1;
+        else dp[1] = dp[0];
+
+        for (int i = 2; i < str.length(); i++) {
+            int curr = str.charAt(i) - '0';
+            int pre = str.charAt(i - 1) - '0';
+            if (pre == 0)
+                dp[i] = dp[i - 1];
+            else
+                dp[i] = dp[i - 1] + (curr + pre * 10 < 26 ? dp[i - 2] : 0);
+        }
+
+        return dp[str.length() - 1];
+    }
+
+
     @Test
     public void test() {
         ArrayOperation a = new ArrayOperation();
-        System.out.println(a.countSubstrings("aaaaa"));
+        System.out.println(a.translateNum(542));
+//        System.out.println(new Integer(27873).toString());
+//        System.out.println('9'-0);
     }
 
 }

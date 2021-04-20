@@ -248,4 +248,27 @@ public class BinarySearchOperation {
         return len - left;
     }
 
+
+    /**
+     * 剑指 Offer 11. 旋转数组的最小数字
+     * 二分o(logn)
+     */
+    public int minArray(int[] numbers) {
+        int low = 0;
+        int high = numbers.length - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (numbers[mid] > numbers[high]){
+                low = mid + 1;
+            } else if (numbers[mid] < numbers[high]) {
+                // 不可mid+1，防止错过答案
+                high = mid;
+            } else {
+                // 往后缩一格，因为low<high，所以不存在缩一格会导致错过答案的情况
+                high--;
+            }
+        }
+        return numbers[high];
+    }
+
 }
