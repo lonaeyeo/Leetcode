@@ -599,4 +599,10 @@ public class BinaryTreeOperation {
     }
 
 
+    /**
+     *
+     */
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+
+    }
 }

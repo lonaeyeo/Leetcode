@@ -1,5 +1,9 @@
 package BinaryTreeAndNode;
 
+import com.sun.xml.internal.messaging.saaj.util.TeeInputStream;
+import sun.reflect.generics.tree.Tree;
+
+import javax.xml.soap.Node;
 import java.util.*;
 
 public class BinarySearchTreeOperation {
@@ -146,12 +150,12 @@ public class BinarySearchTreeOperation {
             prev.left = flag == 0 ? null : prev.left;
             prev.right = flag == 1 ? null : prev.right;
             return root;
-        // 如果待删节点的左子树不存在
+            // 如果待删节点的左子树不存在
         } else if (curr.left == null) {
             prev.left = flag == 0 ? curr.right : prev.left;
             prev.right = flag == 1 ? curr.right : prev.right;
             return root;
-        // 如果待删节点的左子树存在（右子树可能存在，可能不存在）
+            // 如果待删节点的左子树存在（右子树可能存在，可能不存在）
         } else {
             prev.left = flag == 0 ? curr.left : prev.left;
             prev.right = flag == 1 ? curr.left : prev.right;
@@ -167,4 +171,38 @@ public class BinarySearchTreeOperation {
         return root;
     }
 
+
+    /**
+     * 剑指 Offer 27. 二叉树的镜像
+     */
+    public TreeNode mirrorTree(TreeNode root) {
+        if (root == null) return root;
+        Deque<TreeNode> stack = new LinkedList<TreeNode>() {{
+            push(root);
+        }};
+
+        while (!stack.isEmpty()) {
+            // 每次只针对一个Node处理
+            TreeNode curr = stack.pop();
+            if (curr.left != null) stack.push(curr.left);
+            if (curr.right != null) stack.push(curr.right);
+            TreeNode temp = curr.left;
+            curr.left = curr.right;
+            curr.right = temp;
+        }
+        return root;
+
+        //
+        // return dfsHelper(root);
+    }
+
+    private TreeNode dfsHelper(TreeNode root) {
+        if (root == null)
+            return null;
+        TreeNode left = dfsHelper(root.right);
+        TreeNode right = dfsHelper(root.left);
+        root.left = left;
+        root.right = right;
+        return root;
+    }
 }

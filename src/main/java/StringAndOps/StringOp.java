@@ -4,6 +4,7 @@ import Tree.ListNode;
 import org.omg.CORBA.INTERNAL;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,4 +46,39 @@ public class StringOp {
         rPrint(head.next, list);
         list.add(head.val);
     }
+
+    /**
+     * 剑指 Offer 29. 顺时针打印矩阵
+     */
+    public int[] spiralOrder(int[][] matrix) {
+        int m = matrix.length;
+        if (m == 0) return new int[0];
+        int n = matrix[0].length;
+        if (n == 0) return new int[0];
+        int[] res = new int[m * n];
+        boolean[][] vis = new boolean[m][n];
+        int[][] dirs = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int currDir = 0;
+        int x = 0;
+        int y = 0;
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = matrix[x][y];
+            vis[x][y] = true;
+
+            int nx = x + dirs[currDir][0];
+            int ny = y + dirs[currDir][1];
+            // 判断下一个方向
+            if (nx < 0 || nx >= m || ny < 0 || ny >= n || vis[nx][ny]) {
+                // 方向变化，调整方向
+                currDir = (currDir + 1) % 4;
+            }
+            x = x + dirs[currDir][0];
+            y = y + dirs[currDir][1];
+        }
+
+        return res;
+    }
+
+
 }

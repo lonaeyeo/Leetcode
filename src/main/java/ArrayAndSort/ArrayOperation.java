@@ -1,5 +1,6 @@
 package ArrayAndSort;
 
+import Tree.ListNode;
 import com.sun.corba.se.impl.oa.poa.AOMEntry;
 import org.junit.Test;
 import org.omg.CORBA.INTERNAL;
@@ -398,14 +399,133 @@ public class ArrayOperation {
             // 重复都会被剔除掉
             if (dp[i] == dp[a] * 2) a++;
             if (dp[i] == dp[b] * 3) b++;
-            if (dp[i] == dp[c] * 5)c++;
+            if (dp[i] == dp[c] * 5) c++;
         }
         return dp[n];
+    }
+
+
+    /**
+     * 剑指 Offer 42. 连续子数组的最大和
+     */
+    public int maxSubArray(int[] nums) {
+        // 包含[i]的子数组最大和
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int res = dp[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = nums[i] + (dp[i - 1] > 0 ? dp[i - 1] : 0);
+            res = Math.max(dp[i], res);
+        }
+        return res;
+    }
+
+    public int maxSubArray1(int[] nums) {
+        // dp降维复杂度
+        int max = nums[0];
+        int res = max;
+
+        for (int i = 1; i < nums.length; i++) {
+            max = nums[i] + (max > 0 ? max : 0);
+            res = Math.max(res, max);
+        }
+        return res;
+    }
+
+
+    /**
+     * 剑指 Offer 17. 打印从1到最大的n位数
+     */
+    StringBuilder res;
+    int count = 0, n;
+    char[] num, loop = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+    public String printNumbers(int n) {
+        this.n = n;
+        res = new StringBuilder(); // 数字字符串集
+        num = new char[n]; // 定义长度为 n 的字符列表
+        dfs(0); // 开启全排列递归
+        res.deleteCharAt(res.length() - 1); // 删除最后多余的逗号
+        return res.toString(); // 转化为字符串并返回
+    }
+
+    void dfs(int x) {
+        if (x == n) { // 终止条件：已固定完所有位
+            String tmp = String.valueOf(num);
+            int i;
+            for (i = 0; i < tmp.length(); ) {
+                if (tmp.charAt(i) == '0')
+                    break;
+                else
+                    i++;
+            }
+            String curr;
+            if (i == tmp.length())
+                curr = "0";
+            else
+                curr = tmp.substring(i, tmp.length());
+            res.append(curr + ","); // 拼接 num 并添加至 res 尾部，使用逗号隔开
+            return;
+        }
+        for (char i : loop) { // 遍历 ‘0‘ - ’9‘
+            num[x] = i; // 固定第 x 位为 i
+            dfs(x + 1); // 开启固定第 x + 1 位
+        }
+    }
+
+
+    /**
+     * 剑指 Offer 15. 二进制中1的个数
+     */
+    public int hammingWeight(int n) {
+        int res = 0;
+        while (n != 0) {
+            res = res + (n & 1);
+            // 无符号右移一位
+            n = n >>> 1;
+        }
+        return res;
+    }
+
+    // 没操作(n & n-1)一下，就少一个1
+    public int hammingWeight2(int n) {
+        int res = 0;
+        while (n != 0) {
+            res++;
+            n &= n - 1;
+        }
+        return res;
+    }
+
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null)
+            return l2;
+        if (l2 == null)
+            return l1;
+        ListNode root = new ListNode(0);
+        ListNode curr = root;
+        while (l1 != null && l2 != null) {
+            if (l1.val >= l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
+        }
+
+        if (l1 != null) curr.next = l1;
+        else if (l2 != null) curr.next = l2;
+        return root.next;
     }
 
     @Test
     public void test4() {
         ArrayOperation a = new ArrayOperation();
-        System.out.println(a.nthUglyNumber2(10));
+        System.out.println(a.hammingWeight(00000000000000000000000000001011));
+//        System.out.println(a.nthUglyNumber2(10));
     }
 }
