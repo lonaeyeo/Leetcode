@@ -600,9 +600,23 @@ public class BinaryTreeOperation {
 
 
     /**
-     *
+     * 剑指 Offer 26. 树的子结构
      */
     public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if (B == null || A == null) return false;
+        if (isSubStructureHelper(A, B))
+            return true;
+        else
+            return isSubStructure(A.left, B) || isSubStructure(A.right, B);
+    }
 
+    // 判断A的当前开始节点和B是否有相同的结构
+    private boolean isSubStructureHelper(TreeNode A, TreeNode B) {
+        if (A == null && B != null) return false;
+        if (B == null) return true;
+        if (A.val == B.val)
+            return isSubStructureHelper(A.left, B.left) && isSubStructureHelper(A.right, B.right);
+        else
+            return false;
     }
 }
