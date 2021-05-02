@@ -1,4 +1,4 @@
-package DFS_BFS;
+package DFSAndBFS;
 
 import java.util.Deque;
 import java.util.LinkedList;

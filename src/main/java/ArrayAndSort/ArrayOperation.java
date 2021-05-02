@@ -522,6 +522,29 @@ public class ArrayOperation {
         return root.next;
     }
 
+    /**
+     * 剑指 Offer 39. 数组中出现次数超过一半的数字
+     */
+    public int majorityElement(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        Iterator it = map.entrySet().iterator();
+        int max = 0;
+        int res = -1;
+        while (it.hasNext()) {
+            Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+            if (entry.getValue() > max) {
+                max = entry.getValue();
+                res = entry.getKey();
+            }
+        }
+
+        return res;
+    }
+
     @Test
     public void test4() {
         ArrayOperation a = new ArrayOperation();

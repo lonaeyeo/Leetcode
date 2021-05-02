@@ -619,4 +619,21 @@ public class BinaryTreeOperation {
         else
             return false;
     }
+
+    /**
+     * 剑指 Offer 28. 对称的二叉树
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return isSubStructureHelper(root.left, root.right);
+    }
+
+    public boolean isSymmetricHelper(TreeNode left, TreeNode right) {
+        if (left == null && right != null) return false;
+        if (left != null && right == null) return false;
+        if (left == null && right == null) return true;
+        if (left.val == right.val)
+            return isSymmetricHelper(left.left, right.right) && isSymmetricHelper(left.right, right.left);
+        else return false;
+    }
 }
