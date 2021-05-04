@@ -545,10 +545,64 @@ public class ArrayOperation {
         return res;
     }
 
+
+    /**
+     * 剑指 Offer 45. 把数组排成最小的数
+     */
+    public String minNumber(int[] nums) {
+        String[] strs = new String[nums.length];
+        for (int i = 0; i < strs.length; i++) {
+            strs[i] = String.valueOf(nums[i]);
+        }
+        QSortForMinN(strs, 0, strs.length - 1);
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    public void QSortForMinN(String[] nums, int left, int right) {
+        int l = left;
+        int r = right;
+        // 退出条件
+        if (l >= r) return;
+        String curr = nums[l];
+
+        while (l < r) {
+            // 从后开始
+            while (l < r && (curr + nums[r]).compareTo(nums[r] + curr) <= 0) r--;
+            // 如果curr小于nums[l]，那么l++，直到出现nums[l]大于curr。例如3+30=330 > 30+3=303，那么循环继续
+            while (l < r && (curr + nums[l]).compareTo(nums[l] + curr) >= 0) l++;
+            String tmp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = tmp;
+        }
+        // 别忘记最后把当前partition的对比值进行交换，因为交换过后，l-1就是新左空间，l+1就是新右空间
+        nums[left] = nums[l];
+        nums[l] = curr;
+
+        QSortForMinN(nums, left, l - 1);
+        QSortForMinN(nums, l + 1, right);
+    }
+
+    public String minNumber2(int[] nums) {
+        String[] strs = new String[nums.length];
+        for (int i = 0; i < strs.length; i++) {
+            strs[i] = String.valueOf(nums[i]);
+        }
+        Arrays.sort(strs, (x, y) -> (x + y).compareTo(y + x));
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
     @Test
     public void test4() {
         ArrayOperation a = new ArrayOperation();
-        System.out.println(a.hammingWeight(00000000000000000000000000001011));
+        System.out.println(a.minNumber(new int[]{3, 30, 34, 5, 9}));
 //        System.out.println(a.nthUglyNumber2(10));
     }
 }
