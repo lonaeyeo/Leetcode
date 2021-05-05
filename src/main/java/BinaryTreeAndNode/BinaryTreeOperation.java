@@ -636,4 +636,101 @@ public class BinaryTreeOperation {
             return isSymmetricHelper(left.left, right.right) && isSymmetricHelper(left.right, right.left);
         else return false;
     }
+
+    /**
+     * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     * 递归、dfs，分治成n个基本问题，判断是否true
+     */
+    public boolean verifyPostorder(int[] postorder) {
+        return verifyPostorderHelper(postorder, 0, postorder.length - 1);
+    }
+
+    private boolean verifyPostorderHelper(int[] postorder, int l, int r) {
+        if (l >= r) return true;
+        int p = l;
+        while (postorder[p] < postorder[r]) p++;
+        int m = p;
+        while (postorder[p] > postorder[r]) p++;
+        return p == r && verifyPostorderHelper(postorder, l, m - 1) && verifyPostorderHelper(postorder, m, r - 1);
+    }
+
+    /**
+     * 剑指 Offer 36. 二叉搜索树与双向链表
+     * 知识点：二叉搜索树 和 中序遍历
+     */
+    Node head, pre;
+
+    public Node treeToDoublyList(Node root) {
+        if (root == null) return root;
+        treeToDList(root);
+        // 此时pre指向链表尾，head指向头
+        pre.right = head;
+        head.left = pre;
+        return head;
+    }
+
+    private void treeToDList(Node curr) {
+        if (curr == null) return;
+        treeToDList(curr.left);
+        // 中序遍历处理
+        if (pre == null) {
+            // 标记一下head
+            head = curr;
+        } else {
+            pre.right = curr;
+            curr.left = pre;
+        }
+        pre = curr;
+
+        treeToDList(curr.right);
+    }
+
+    /**
+     * 剑指 Offer 34. 二叉树中和为某一值的路径
+     * 题目：包含负数，路径应为root到叶子节点
+     */
+    List<Integer> curr;
+    List<List<Integer>> res;
+
+    public List<List<Integer>> pathSum1(TreeNode root, int target) {
+        res = new ArrayList<>();
+        curr = new LinkedList<>();
+        pathSumDFS(root, 0, target);
+        return res;
+    }
+
+    public void pathSumDFS(TreeNode root, int sum, int target) {
+        // 退出条件一：到空节点就结束
+        if (root == null) return;
+        int currSum = sum + root.val;
+        curr.add(root.val);
+        // 退出条件二：到叶子节点并且sum=target
+        if (currSum == target && root.right == null && root.left == null) {
+            res.add(new LinkedList<>(curr));
+        } else {
+            pathSumDFS(root.left, sum + root.val, target);
+            pathSumDFS(root.right, sum + root.val, target);
+        }
+        curr.remove(curr.size() - 1);
+    }
+
+}
+
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+
+    public Node() {
+    }
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
 }

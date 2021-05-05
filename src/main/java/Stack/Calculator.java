@@ -131,7 +131,6 @@ public class Calculator {
                 } else {
                     stack.push(num);
                 }
-
             } else {
                 preSign = s.charAt(i);
             }

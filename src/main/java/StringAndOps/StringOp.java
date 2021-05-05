@@ -81,4 +81,23 @@ public class StringOp {
     }
 
 
+    /**
+     * 剑指 Offer 20. 表示数值的字符串
+     */
+    public boolean isNumber(String s) {
+        if (s == null || s.length() == 0)
+            return false;
+        // 去空
+        s = s.trim();
+
+        try {
+            float tmp = Float.parseFloat(s);
+        } catch (Exception e) {
+            return false;
+        }
+        // 末尾有f，d,D这些不算，但是3.算数字（面向测试用例编程）
+        char c = s.charAt(s.length() - 1);
+        return Character.isDigit(c) || c == '.';
+    }
+
 }
