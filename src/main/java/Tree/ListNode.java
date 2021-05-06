@@ -43,4 +43,19 @@ public class ListNode {
         }
         return atomicHead.next;
     }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode h = head;
+        ListNode pre = null;
+        ListNode curr = null;
+
+        while (h != null) {
+            curr = h;
+            h = h.next;
+            curr.next = pre;
+            pre = curr;
+        }
+
+        return curr;
+    }
 }
