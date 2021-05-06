@@ -22,6 +22,8 @@ public class FindKthLargestN {
         // 将nums[mid]换到[right]去
         swap(nums, mid, right);
 
+        // 快排的另一种方式：只从一边开始扫描，所以小于标记数的值依次挪到左边；
+        // 直到扫描结束，最后将标记数置于分隔下表ci处
         int ci = left;
         for (int i = left; i < right; i++) {
             // 把小于nums[right]的数都挪到左边
@@ -31,6 +33,7 @@ public class FindKthLargestN {
         // 别忘了标记的nums[right]换到分界点
         swap(nums, ci, right);
 
+        // 判断标记处小标是否为第k个
         if (ci == index)
             return nums[ci];
         else
