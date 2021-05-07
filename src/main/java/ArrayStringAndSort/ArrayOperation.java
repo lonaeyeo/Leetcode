@@ -584,6 +584,33 @@ public class ArrayOperation {
         QSortForMinN(nums, l + 1, right);
     }
 
+    Random random = new Random();
+    // 快排的key也要random，这年头就是这样的
+    public void quickSort(int[] nums, int left, int right) {
+        if (left >= right) return;
+        int l = left;
+        int r = right;
+        int keyIndex = random.nextInt(right - left + 1) + left;
+        int flag = nums[keyIndex];
+        swap(nums, l, keyIndex);
+
+        while (l < r) {
+            while (l < r && nums[r] >= flag) r--;
+            while (l < r && nums[l] <= flag) l++;
+            swap(nums, l, r);
+        }
+        swap(nums, l, left);
+
+        quickSort(nums, left, l - 1);
+        quickSort(nums, l + 1, right);
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
     public String minNumber2(int[] nums) {
         String[] strs = new String[nums.length];
         for (int i = 0; i < strs.length; i++) {
