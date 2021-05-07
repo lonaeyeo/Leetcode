@@ -1,14 +1,9 @@
-package InputOutput;
+package _Test.InputOutput;
 
-import sun.reflect.annotation.ExceptionProxy;
-
-import javax.swing.plaf.synth.SynthEditorPaneUI;
-import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {

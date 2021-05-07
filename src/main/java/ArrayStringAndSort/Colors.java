@@ -1,4 +1,4 @@
-package ArrayAndSort;
+package ArrayStringAndSort;
 
 public class Colors {
 

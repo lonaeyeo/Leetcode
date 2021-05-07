@@ -1,6 +1,6 @@
 package RDDL;
 
-import Tree.ListNode;
+import TreeAndNode.ListNode;
 import org.junit.Test;
 
 public class EasyTemp {

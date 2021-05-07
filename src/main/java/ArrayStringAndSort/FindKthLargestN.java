@@ -1,4 +1,4 @@
-package ArrayAndSort;
+package ArrayStringAndSort;
 
 import java.util.Random;
 

@@ -1,33 +1,33 @@
-package Tree;
+package TreeAndNode;
 
 import org.junit.Test;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class NextNodePoint {
+public class NextTriNodePoint {
 
     @Test
     public void test() {
-        Node n1 = new Node(1);
-        Node n2 = new Node(2);
-        Node n3 = new Node(3);
+        TriNode n1 = new TriNode(1);
+        TriNode n2 = new TriNode(2);
+        TriNode n3 = new TriNode(3);
         n1.left = n2;
         n1.right = n3;
-        Node n4 = new Node(4);
-        Node n5 = new Node(5);
-        Node n6 = new Node(6);
-        Node n7 = new Node(7);
+        TriNode n4 = new TriNode(4);
+        TriNode n5 = new TriNode(5);
+        TriNode n6 = new TriNode(6);
+        TriNode n7 = new TriNode(7);
         n2.left = n4;
         n2.right = n5;
         n3.left = n6;
         n3.right = n7;
-        NextNodePoint perfectBinaryTree = new NextNodePoint();
+        NextTriNodePoint perfectBinaryTree = new NextTriNodePoint();
         perfectBinaryTree.connect1(n1);
     }
 
     // 同一层单向指向，next。完美二叉树
-    public Node connect1(Node root) {
+    public TriNode connect1(TriNode root) {
         if (root == null)
             return root;
         if (root.left != null) {
@@ -42,19 +42,19 @@ public class NextNodePoint {
     }
 
     // 同一层单向指向，next。普通二叉树
-    public Node connect(Node root) {
+    public TriNode connect(TriNode root) {
         if (root == null)
             return root;
 
-        Deque<Node> queue = new LinkedList<>();
+        Deque<TriNode> queue = new LinkedList<>();
         queue.offerLast(root);
 
         while (!queue.isEmpty()) {
             int len = queue.size();
-            Node prev = null;
+            TriNode prev = null;
 
             for (int i = 0; i < len; ++i) {
-                Node curr = queue.pollFirst();
+                TriNode curr = queue.pollFirst();
                 if (curr.left != null) queue.offerLast(curr.left);
                 if (curr.right != null) queue.offerLast(curr.right);
                 if (i > 0) prev.next = curr;
@@ -65,18 +65,18 @@ public class NextNodePoint {
     }
 
     // 普通二叉树，第二种方法，常数空间。
-    Node last = null, nextStart = null;
+    TriNode last = null, nextStart = null;
 
-    public Node connect_2(Node root) {
+    public TriNode connect_2(TriNode root) {
         if (root == null) {
             return null;
         }
-        Node start = root;
+        TriNode start = root;
         while (start != null) {
             // 每一层开始都要置last（prev）为空，置nextStart为空
             last = null;
             nextStart = null;
-            for (Node p = start; p != null; p = p.next) {
+            for (TriNode p = start; p != null; p = p.next) {
                 // 迭代第一个点时，将获得nextStart
                 // 迭代每个点时，都会更新last
                 if (p.left != null) {
@@ -91,7 +91,7 @@ public class NextNodePoint {
         return root;
     }
 
-    public void handle(Node p) {
+    public void handle(TriNode p) {
         if (last != null) {
             last.next = p;
         }
@@ -102,23 +102,23 @@ public class NextNodePoint {
     }
 }
 
-class Node {
+class TriNode {
     public int val;
-    public Node left;
-    public Node right;
-    public Node next;
+    public TriNode left;
+    public TriNode right;
+    public TriNode next;
 
-    public Node() {
+    public TriNode() {
     }
 
-    public Node(int _val) {
+    public TriNode(int _val) {
         val = _val;
     }
 
-    public Node(int _val, Node _left, Node _right, Node _next) {
+    public TriNode(int _val, TriNode _left, TriNode _right, TriNode _next) {
         val = _val;
         left = _left;
         right = _right;
         next = _next;
     }
-};
+}

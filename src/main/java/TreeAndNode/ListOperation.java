@@ -1,6 +1,5 @@
-package BinaryTreeAndNode;
+package TreeAndNode;
 
-import Tree.ListNode;
 import org.junit.Test;
 
 import java.util.Deque;

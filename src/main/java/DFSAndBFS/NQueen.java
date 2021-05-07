@@ -1,4 +1,4 @@
-package Backtrack;
+package DFSAndBFS;
 
 import java.util.ArrayList;
 import java.util.Arrays;

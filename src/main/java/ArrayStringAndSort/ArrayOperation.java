@@ -1,9 +1,7 @@
-package ArrayAndSort;
+package ArrayStringAndSort;
 
-import Tree.ListNode;
-import com.sun.corba.se.impl.oa.poa.AOMEntry;
+import TreeAndNode.ListNode;
 import org.junit.Test;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.*;
 

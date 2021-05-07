@@ -1,9 +1,5 @@
-package BinaryTreeAndNode;
+package TreeAndNode;
 
-import com.sun.xml.internal.messaging.saaj.util.TeeInputStream;
-import sun.reflect.generics.tree.Tree;
-
-import javax.xml.soap.Node;
 import java.util.*;
 
 public class BinarySearchTreeOperation {

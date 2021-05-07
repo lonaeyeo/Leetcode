@@ -1,4 +1,4 @@
-package BinaryTreeAndNode;
+package TreeAndNode;
 
 import org.junit.Test;
 
@@ -658,9 +658,9 @@ public class BinaryTreeOperation {
      * 剑指 Offer 36. 二叉搜索树与双向链表
      * 知识点：二叉搜索树 和 中序遍历
      */
-    Node head, pre;
+    TriNode head, pre;
 
-    public Node treeToDoublyList(Node root) {
+    public TriNode treeToDoublyList(TriNode root) {
         if (root == null) return root;
         treeToDList(root);
         // 此时pre指向链表尾，head指向头
@@ -669,7 +669,7 @@ public class BinaryTreeOperation {
         return head;
     }
 
-    private void treeToDList(Node curr) {
+    private void treeToDList(TriNode curr) {
         if (curr == null) return;
         treeToDList(curr.left);
         // 中序遍历处理
@@ -718,8 +718,8 @@ public class BinaryTreeOperation {
 
 class Node {
     public int val;
-    public Node left;
-    public Node right;
+    public TriNode left;
+    public TriNode right;
 
     public Node() {
     }
@@ -728,7 +728,7 @@ class Node {
         val = _val;
     }
 
-    public Node(int _val, Node _left, Node _right) {
+    public Node(int _val, TriNode _left, TriNode _right) {
         val = _val;
         left = _left;
         right = _right;
